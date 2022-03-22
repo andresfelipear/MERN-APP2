@@ -1,9 +1,12 @@
 import logo from './logo.svg';
-
+import SignUpPage from './pages/SignUpPage';
+import {Routes, Route} from 'react-router-dom'
 function App() {
   return (
     <div className="App">
-      hello world
+      <Routes>
+        <Route path='/signup' element={SignUpPage}/>
+      </Routes>
     </div>
   );
 }
