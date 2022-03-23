@@ -35,22 +35,24 @@ function SignUpPage() {
             <Container >
                 <form className='formWidth'>
                     <Form.Label>Username</Form.Label>
-                    <Form.Field>
+                    <Form.Field kind="group">
                         <Form.Control>
-
                             <Form.Select onChange={(e) => setSelectAvatar(e.target.value)}>
                                 <option value="avatar 1">#1</option>
                                 <option value="avatar 2">#2</option>
                                 <option value="avatar 3">#3</option>
                                 <option value="avatar 4">#4</option>
                             </Form.Select>
-                            <Icon align='left' size="large">
-                                <i className={`fas fa-user`}></i>
+                            <Icon align='left' size="large" color="info" >
+                                <i className={`fas fa-lg ${icon && icon}`}></i>
                             </Icon>
+                        </Form.Control>
+                        <Form.Control fullwidth>
+                            <Form.Input name='username' onChange={(e) => setUsername(e.target.value)} />
+
                         </Form.Control>
 
                     </Form.Field>
-
 
 
                 </form>
