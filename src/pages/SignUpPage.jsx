@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Section, Container, Form, Icon, Button } from "react-bulma-components"
+import { Section, Container, Form, Icon, Button} from "react-bulma-components"
+import Modal from '../components/notification/Modal';
 function SignUpPage() {
     //values fontawesome icons avatar
     const iconTie = "fa-user-tie";
@@ -16,8 +17,34 @@ function SignUpPage() {
     const [icon, setIcon] = useState(iconTie);
     const [disabled, setDisabled] = useState(true)
 
+    //modal
+    const [notiTitle, setNotiTitle] = useState("")
+    const [notiBody, setNotiBody] = useState("")
 
-    const submit = ()=>{
+
+    const openModal = (title, message) => {
+        setNotiTitle(title);
+        setNotiBody(message);
+        const modalContainer = document.getElementById("modal-container");
+        modalContainer.classList.add("is-active");
+        
+    }
+
+    const closeModal = () => {
+        const modalContainer = document.getElementById("modal-container");
+        modalContainer.classList.remove("is-active");
+    }
+
+    //end modal
+
+    const submit = () => {
+        if(confirmPassword===password){
+
+        }else{
+            openModal("Incorrect Credentials", "Password and confirm password do not match. Try Again!")
+            setConfirmPassword("")
+            setPassword("")
+        }
 
     }
     useEffect(() => {
@@ -38,13 +65,13 @@ function SignUpPage() {
 
     useEffect(() => {
         if (password && confirmPassword) {
-            if(password.length>3 && confirmPassword>3){
-                setDisabled(password!==confirmPassword)
+            if (password.length > 3 && confirmPassword > 3) {
+                    setDisabled(false)
             }
-        }else{
+        } else {
             setDisabled(true)
         }
-    }, [password,confirmPassword])
+    }, [password, confirmPassword])
     return (
         <Section mt={6} >
             <Container >
@@ -52,7 +79,7 @@ function SignUpPage() {
                     <Form.Label>Username</Form.Label>
                     <Form.Field kind="group">
                         <Form.Control>
-                            <Form.Select onChange={(e) => setSelectAvatar(e.target.value)}>
+                            <Form.Select value={selectAvatar} onChange={(e) => setSelectAvatar(e.target.value)}>
                                 <option value="avatar 1">#1</option>
                                 <option value="avatar 2">#2</option>
                                 <option value="avatar 3">#3</option>
@@ -63,7 +90,7 @@ function SignUpPage() {
                             </Icon>
                         </Form.Control>
                         <Form.Control fullwidth>
-                            <Form.Input name='username' onChange={(e) => setUsername(e.target.value)} />
+                            <Form.Input value={username} name='username' onChange={(e) => setUsername(e.target.value)} />
 
                         </Form.Control>
 
@@ -72,38 +99,41 @@ function SignUpPage() {
                     <Form.Field>
                         <Form.Label>Email</Form.Label>
                         <Form.Control>
-                            <Form.Input type="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} />
+                            <Form.Input value={email} type="email" name="email" onChange={(e) => { setEmail(e.target.value) }} />
                         </Form.Control>
                     </Form.Field>
 
                     <Form.Field>
                         <Form.Label>Password</Form.Label>
                         <Form.Control>
-                            <Form.Input type="password" name="password" onChange={(e)=>{setPassword(e.target.value)}} />
+                            <Form.Input value={password} type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
                         </Form.Control>
-                        <Form.Help color="danger">{(password.length!=0 &&password.length<=3) && ("Password must have more than 3 characters") }</Form.Help>
+                        <Form.Help color="danger">{(password.length != 0 && password.length <= 3) && ("Password must have more than 3 characters")}</Form.Help>
                     </Form.Field>
 
                     <Form.Field>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control>
-                            <Form.Input type="password" name="confirmPassword" onChange={(e)=>{setConfirmPassword(e.target.value)}} />
+                            <Form.Input value={confirmPassword} type="password" name="confirmPassword" onChange={(e) => { setConfirmPassword(e.target.value) }} />
                         </Form.Control>
-                        <Form.Help color="danger">{(confirmPassword.length!=0 &&confirmPassword.length<=3) && ("Confirm Password must have more than 3 characters") }</Form.Help>
+                        <Form.Help color="danger">{(confirmPassword.length !== 0 && confirmPassword.length <= 3) && ("Confirm Password must have more than 3 characters")}</Form.Help>
                     </Form.Field>
+                    <Button.Group align="center" mt={5}>
+                        <Button
+                            color={disabled ? ("danger") : ("link")}
+                            onClick={submit}
+                            disabled={disabled}
+                            submit={false}
+                        >Sign Up
+                        </Button>
 
-                    <Button
-                    color={disabled?("danger"):("link")}
-                    onClick={submit}
-                    disabled={disabled}
-                    >Sign Up
-                    </Button>
+                    </Button.Group>
 
 
                 </form>
 
             </Container>
-
+            <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal} />
         </Section>
     )
 }
