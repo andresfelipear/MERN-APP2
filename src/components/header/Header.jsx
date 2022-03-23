@@ -70,7 +70,7 @@ function Header() {
                                 <Navbar.Item>
                                     Breakfasts
                                 </Navbar.Item>
-                                <Navbar.Item>
+                                <Navbar.Item href="/policy">
                                     Delivery Policy
                                 </Navbar.Item>
                                 <Navbar.Item href="/contact">
