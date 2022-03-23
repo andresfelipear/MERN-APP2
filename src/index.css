@@ -14,13 +14,3 @@ code {
     monospace;
 }
 
-.borderRadius{
-  border-radius: 10px;
-}
-
-form{
-  max-width: 410px;
-  margin: auto;
-  padding: 70px 50px;
-  background-color: #f5f5f5!important;
-}

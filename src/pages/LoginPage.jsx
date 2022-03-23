@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Section, Container, Form, Button } from "react-bulma-components"
+import { Section, Container, Form, Button, Box } from "react-bulma-components"
 import { Link } from 'react-router-dom';
 import Modal from '../components/notification/Modal';
 function LoginPage() {
@@ -44,8 +44,8 @@ function LoginPage() {
     }, [password, username])
     return (
         <Section mt={6} >
-            <Container >
-                <form className='formWidth borderRadius'>
+            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px" }}>
+                <form>
                     <Form.Field>
                         <Form.Label>Username</Form.Label>
                         <Form.Control>
@@ -72,8 +72,8 @@ function LoginPage() {
                         </Button>
                     </Button.Group>
                 </form>
+            </Box>
 
-            </Container>
             <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal} />
         </Section>
     )

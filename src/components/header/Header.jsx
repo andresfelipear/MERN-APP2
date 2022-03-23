@@ -7,10 +7,14 @@ function Header() {
 
     return (
         <div>
-            <Navbar>
-                <Navbar.Brand>
+            
+            <Navbar color="light" backgroundColor="danger-light">
+                <Navbar.Brand >
                     <Navbar.Item href="/">
                         <img src="/logo.png" alt="logo" />
+                    </Navbar.Item>
+                    <Navbar.Item href="/">
+                        Home
                     </Navbar.Item>
 
                 </Navbar.Brand>

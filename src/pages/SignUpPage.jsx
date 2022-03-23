@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Section, Container, Form, Icon, Button} from "react-bulma-components"
+import { Section, Container, Form, Icon, Button, Box } from "react-bulma-components"
 import Modal from '../components/notification/Modal';
 function SignUpPage() {
     //values fontawesome icons avatar
@@ -27,7 +27,7 @@ function SignUpPage() {
         setNotiBody(message);
         const modalContainer = document.getElementById("modal-container");
         modalContainer.classList.add("is-active");
-        
+
     }
 
     const closeModal = () => {
@@ -38,9 +38,9 @@ function SignUpPage() {
     //end modal
 
     const submit = () => {
-        if(confirmPassword===password){
+        if (confirmPassword === password) {
 
-        }else{
+        } else {
             openModal("Incorrect Credentials", "Password and confirm password do not match. Try Again!")
             setConfirmPassword("")
             setPassword("")
@@ -66,7 +66,7 @@ function SignUpPage() {
     useEffect(() => {
         if (password && confirmPassword) {
             if (password.length > 3 && confirmPassword > 3) {
-                    setDisabled(false)
+                setDisabled(false)
             }
         } else {
             setDisabled(true)
@@ -74,8 +74,8 @@ function SignUpPage() {
     }, [password, confirmPassword])
     return (
         <Section mt={6} >
-            <Container >
-                <form className='formWidth borderRadius'>
+            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px" }}>
+                <form>
                     <Form.Label>Username</Form.Label>
                     <Form.Field kind="group">
                         <Form.Control>
@@ -131,8 +131,7 @@ function SignUpPage() {
 
 
                 </form>
-
-            </Container>
+            </Box>
             <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal} />
         </Section>
     )
