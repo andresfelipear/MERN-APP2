@@ -8,10 +8,10 @@ function Header() {
     return (
         <div>
             <Box radiusless display="flex" shadowless marginless justifyContent="center" style={{ backgroundColor: "#905960" }}>
-                <Breadcrumb separator="succeeds">
+                <Breadcrumb separator="bullet">
                     <Breadcrumb.Item active>
-                        <a style={{ color: "white", flexDirection:"column" }}>
-                            Contact Numbers
+                        <a style={{ color: "white", flexDirection:"column", marginInline:"10px" }}>
+                            <strong>Contact Numbers</strong>
                             <div>
                                 <Icon size="small">
                                     <i className={`fas fa-phone`}></i>
@@ -23,11 +23,29 @@ function Header() {
                     </Breadcrumb.Item>
 
                     <Breadcrumb.Item active>
-                        <a style={{ color: "white" }}>Schedule</a>
+                        <a style={{ color: "white", flexDirection:"column", marginInline:"10px" }}>
+                            <strong> Schedule</strong>
+                            <div>
+                                <Icon size="small">
+                                    <i className={`fas fa-calendar`}></i>
+                                </Icon>
+                               M-F 8am - 6pm / Saturday 9am - 3pm
+                            </div>
+
+                        </a>
                     </Breadcrumb.Item>
 
                     <Breadcrumb.Item active>
-                        <a style={{ color: "white" }}>Delivery</a>
+                        <a style={{ color: "white", flexDirection:"column", marginInline:"10px" }}>
+                            <strong> Delivery</strong>
+                            <div>
+                                <Icon size="small">
+                                    <i className={`fas fa-truck`}></i>
+                                </Icon>
+                               Sunday to Sunday
+                            </div>
+
+                        </a>
                     </Breadcrumb.Item>
                 </Breadcrumb>
             </Box>
@@ -55,7 +73,7 @@ function Header() {
                                 <Navbar.Item>
                                     Delivery Policy
                                 </Navbar.Item>
-                                <Navbar.Item>
+                                <Navbar.Item href="/contact">
                                     Contact
                                 </Navbar.Item>
                             </Navbar.Dropdown>

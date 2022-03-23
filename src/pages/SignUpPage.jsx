@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Section, Container, Form, Icon, Button, Box } from "react-bulma-components"
+import { Section, Form, Icon, Button, Box } from "react-bulma-components"
 import Modal from '../components/notification/Modal';
 function SignUpPage() {
     //values fontawesome icons avatar

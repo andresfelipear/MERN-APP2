@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Section, Form, Button, Box } from "react-bulma-components"
-import { Link } from 'react-router-dom';
+import { Section, Form, Button, Box, Heading } from "react-bulma-components"
 import Modal from '../components/notification/Modal';
-function LoginPage() {
+function ContactPage() {
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [name, setname] = useState("")
+    const [phone, setPhone] = useState("")
+    const [email, setEmail] = useState("")
+    const [message, setMessage] = useState("")
     const [disabled, setDisabled] = useState(true)
 
     //modal
@@ -30,35 +31,49 @@ function LoginPage() {
     //end modal
 
     const submit = () => {
-        openModal("Confirmation Login", "Login Correct")
+        openModal("Confirmation Message", "The Message was send! Thanks for contact us")
 
 
     }
 
     useEffect(() => {
-        if (password && username) {
+        if ( name && email && message) {
             setDisabled(false)
         } else {
             setDisabled(true)
         }
-    }, [password, username])
+    }, [phone, name])
     return (
         <Section mt={6} >   
             <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor:"#feecf0" }}>
                 <form>
+                    <Heading textAlign="center">How are you?</Heading>
                     <Form.Field>
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label>Name</Form.Label>
                         <Form.Control>
-                            <Form.Input value={username} type="text" name="username" onChange={(e) => { setUsername(e.target.value) }} />
+                            <Form.Input value={name} type="text" name="name" onChange={(e) => { setname(e.target.value) }} />
                         </Form.Control>
                     </Form.Field>
 
                     <Form.Field>
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Phone</Form.Label>
                         <Form.Control>
-                            <Form.Input value={password} type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
+                            <Form.Input value={phone} type="tel" name="phone" onChange={(e) => { setPhone(e.target.value) }} />
                         </Form.Control>
-                        <Link className='has-text-black is-italic has-text-weight-light' to={"/forgotPassword"}> Forgot Password?</Link>
+                    </Form.Field>
+
+                    <Form.Field>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control>
+                            <Form.Input value={email} type="email" name="email" onChange={(e) => { setEmail(e.target.value) }} />
+                        </Form.Control>
+                    </Form.Field>
+
+                    <Form.Field>
+                        <Form.Label>Message</Form.Label>
+                        <Form.Control>
+                            <Form.Textarea value={message} name="message" onChange={(e) => { setMessage(e.target.value) }} />
+                        </Form.Control>
                     </Form.Field>
 
                     <Button.Group align="center" mt={5}>
@@ -67,7 +82,7 @@ function LoginPage() {
                             onClick={submit}
                             disabled={disabled}
                             submit={false}
-                        >Login
+                        >Send
                         </Button>
                     </Button.Group>
                 </form>
@@ -78,4 +93,4 @@ function LoginPage() {
     )
 }
 
-export default LoginPage
+export default ContactPage
