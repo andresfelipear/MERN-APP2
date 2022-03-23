@@ -75,7 +75,7 @@ function SignUpPage() {
     return (
         <Section mt={6} >
             <Container >
-                <form className='formWidth'>
+                <form className='formWidth borderRadius'>
                     <Form.Label>Username</Form.Label>
                     <Form.Field kind="group">
                         <Form.Control>
@@ -108,7 +108,7 @@ function SignUpPage() {
                         <Form.Control>
                             <Form.Input value={password} type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
                         </Form.Control>
-                        <Form.Help color="danger">{(password.length != 0 && password.length <= 3) && ("Password must have more than 3 characters")}</Form.Help>
+                        <Form.Help color="danger">{(password.length !== 0 && password.length <= 3) && ("Password must have more than 3 characters")}</Form.Help>
                     </Form.Field>
 
                     <Form.Field>

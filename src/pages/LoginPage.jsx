@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Section, Container, Form, Icon, Button } from "react-bulma-components"
+import { Section, Container, Form, Button } from "react-bulma-components"
+import { Link } from 'react-router-dom';
 import Modal from '../components/notification/Modal';
 function LoginPage() {
 
@@ -44,7 +45,7 @@ function LoginPage() {
     return (
         <Section mt={6} >
             <Container >
-                <form className='formWidth'>
+                <form className='formWidth borderRadius'>
                     <Form.Field>
                         <Form.Label>Username</Form.Label>
                         <Form.Control>
@@ -57,7 +58,8 @@ function LoginPage() {
                         <Form.Control>
                             <Form.Input value={password} type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
                         </Form.Control>
-                        <Form.Help color="danger">{(password.length != 0 && password.length <= 3) && ("Password should have more than 3 characters")}</Form.Help>
+                        <Form.Help color="danger">{(password.length !== 0 && password.length <= 3) && ("Password should have more than 3 characters")}</Form.Help>
+                        <Link className='has-text-info is-italic has-text-weight-light' to={"/forgotPassword"}> Forgot Password?</Link>
                     </Form.Field>
 
                     <Button.Group align="center" mt={5}>
