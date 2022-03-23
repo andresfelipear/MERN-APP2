@@ -74,7 +74,7 @@ function SignUpPage() {
     }, [password, confirmPassword])
     return (
         <Section mt={6} >
-            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px" }}>
+            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor:"#feecf0" }}>
                 <form>
                     <Form.Label>Username</Form.Label>
                     <Form.Field kind="group">
@@ -85,7 +85,7 @@ function SignUpPage() {
                                 <option value="avatar 3">#3</option>
                                 <option value="avatar 4">#4</option>
                             </Form.Select>
-                            <Icon align='left' size="large" color="info" >
+                            <Icon align='left' size="large" style={{color:"#905960"}} >
                                 <i className={`fas fa-lg ${icon && icon}`}></i>
                             </Icon>
                         </Form.Control>
@@ -120,7 +120,7 @@ function SignUpPage() {
                     </Form.Field>
                     <Button.Group align="center" mt={5}>
                         <Button
-                            color={disabled ? ("danger") : ("link")}
+                            color={disabled ? ("sucess") : ("danger")}
                             onClick={submit}
                             disabled={disabled}
                             submit={false}

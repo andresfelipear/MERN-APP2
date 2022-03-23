@@ -43,8 +43,8 @@ function LoginPage() {
         }
     }, [password, username])
     return (
-        <Section mt={6} >
-            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px" }}>
+        <Section mt={6} >   
+            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor:"#feecf0" }}>
                 <form>
                     <Form.Field>
                         <Form.Label>Username</Form.Label>
@@ -58,13 +58,12 @@ function LoginPage() {
                         <Form.Control>
                             <Form.Input value={password} type="password" name="password" onChange={(e) => { setPassword(e.target.value) }} />
                         </Form.Control>
-                        <Form.Help color="danger">{(password.length !== 0 && password.length <= 3) && ("Password should have more than 3 characters")}</Form.Help>
-                        <Link className='has-text-info is-italic has-text-weight-light' to={"/forgotPassword"}> Forgot Password?</Link>
+                        <Link className='has-text-black is-italic has-text-weight-light' to={"/forgotPassword"}> Forgot Password?</Link>
                     </Form.Field>
 
                     <Button.Group align="center" mt={5}>
                         <Button
-                            color={disabled ? ("danger") : ("link")}
+                            color={disabled ? ("sucess") : ("danger")}
                             onClick={submit}
                             disabled={disabled}
                             submit={false}

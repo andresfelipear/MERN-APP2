@@ -1,14 +1,38 @@
 
 import "./Header.css"
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Navbar } from "react-bulma-components";
+import { Navbar, Box, Breadcrumb, Icon } from "react-bulma-components";
 
 function Header() {
 
     return (
         <div>
-            
-            <Navbar color="light" backgroundColor="danger-light">
+            <Box radiusless display="flex" shadowless marginless justifyContent="center" style={{ backgroundColor: "#905960" }}>
+                <Breadcrumb separator="succeeds">
+                    <Breadcrumb.Item active>
+                        <a style={{ color: "white", flexDirection:"column" }}>
+                            Contact Numbers
+                            <div>
+                                <Icon size="small">
+                                    <i className={`fas fa-phone`}></i>
+                                </Icon>
+                               +1 (236)-986-3592
+                            </div>
+
+                        </a>
+                    </Breadcrumb.Item>
+
+                    <Breadcrumb.Item active>
+                        <a style={{ color: "white" }}>Schedule</a>
+                    </Breadcrumb.Item>
+
+                    <Breadcrumb.Item active>
+                        <a style={{ color: "white" }}>Delivery</a>
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+            </Box>
+
+            <Navbar p={2} color="light" backgroundColor="danger-light">
                 <Navbar.Brand >
                     <Navbar.Item href="/">
                         <img src="/logo.png" alt="logo" />
@@ -22,7 +46,7 @@ function Header() {
                     <Navbar.Container>
                         <Navbar.Item active={false} hoverable={true} >
                             <Navbar.Link>
-                                More   
+                                More
                             </Navbar.Link>
                             <Navbar.Dropdown>
                                 <Navbar.Item>
