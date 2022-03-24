@@ -1,6 +1,6 @@
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
-import Footer from './components/footer/Footer'
+import Foot from './components/footer/Foot';
 import Header from './components/header/Header';
 import ContactPage from './pages/ContactPage';
 import DeliveryPolicy from './pages/DeliveryPolicy';
@@ -15,7 +15,7 @@ function App() {
         <Route path='/contact' element={<ContactPage/>} />
         <Route path='/policy' element={<DeliveryPolicy/>} />
       </Routes>
-      <Footer/>
+      <Foot/>
     </div>
   );
 }
