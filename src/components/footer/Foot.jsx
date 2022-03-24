@@ -1,11 +1,15 @@
 import React from 'react'
-import { Footer, Breadcrumb, Box, Icon, Image } from "react-bulma-components"
+import { Footer, Breadcrumb, Box, Icon, Image, Heading } from "react-bulma-components"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faFacebook, faInstagram} from "@fortawesome/free-brands-svg-icons"
 // import {solid, regular, brands} from "@fortawesome/fontawesome-svg-core/import.macro"
 function Foot() {
     return (
         <Footer style={{ paddingInline: "0px" }} textAlign="center" backgroundColor='white'>
+            <Box shadowless radiusless backgroundColor='danger-light' marginless style={{paddingBottom:0}}>
+                <Heading marginless textAlign="center"> Our Payment Methods</Heading>
+                <img src='/images/medios-de-pago.png'/>
+            </Box>
             <Box radiusless display="flex" shadowless marginless justifyContent="center" style={{ backgroundColor: "#905960" }}>
                 <Breadcrumb separator="arrow">
                     <Breadcrumb.Item active>
