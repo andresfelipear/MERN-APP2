@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Section, Form, Icon, Button, Box } from "react-bulma-components"
 import { useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from "../context/UserContext"
@@ -44,6 +44,10 @@ function SignUpPage() {
     //User Context
     const [userContext, setUserContext] = useContext(UserContext)
 
+    //Navigate
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const submit = () => {
         if (confirmPassword === password) {
             const body = { username, email, password, icon };
@@ -56,14 +60,10 @@ function SignUpPage() {
                 .then((res) => {
                     if (!res.ok) {
                         throw new Error(res.status);
+                    }else{
+                        setUserContext(prev => ({ ...prev, token: res.token }))
+                        navigate("/")
                     }
-                    return res.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                    setUserContext(prev => ({ ...prev, token: data.token }))
-                    let from = location.state?.from?.pathname || '/'
-                    navigate(from, { replace: true })
                 })
                 .catch((err) => {
                     openModal("Error Signing Up!", "Username and/or Email already exists")
@@ -104,7 +104,6 @@ function SignUpPage() {
     return (
         <Section mt={6} >
             <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor: "#feecf0" }}>
-                <form>
                     <Form.Label>Username</Form.Label>
                     <Form.Field kind="group">
                         <Form.Control>
@@ -155,11 +154,7 @@ function SignUpPage() {
                             submit={false}
                         >Sign Up
                         </Button>
-
                     </Button.Group>
-
-
-                </form>
             </Box>
             <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal} />
         </Section>
