@@ -1,48 +1,79 @@
 
 import "./Header.css"
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Navbar, Box, Breadcrumb, Icon } from "react-bulma-components";
+import React, { useCallback, useContext, useEffect} from "react";
+import { UserContext } from "../../context/UserContext";
+import { Navbar, Box, Breadcrumb, Icon, Button } from "react-bulma-components";
 
 function Header() {
+
+    const [userContext, setUserContext] = useContext(UserContext);
+
+    const fetchUserDetails = useCallback(() => {
+        fetch("http://localhost:8000/api/user/me", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userContext.token}`,
+            },
+        }).then(async (response) => {
+            if (response.ok) {
+                const data = await response.json();
+                setUserContext((prev) => ({ ...prev, details: data }));
+            } else {
+                if (response.status === 401) {
+                    window.location.reload();
+                } else {
+                    setUserContext((prev) => ({ ...prev, details: null }));
+                }
+            }
+        });
+    }, [setUserContext, userContext.token]);
+
+    useEffect(() => {
+        if (!userContext.details && userContext.token) {
+            fetchUserDetails();
+        }
+    }, [fetchUserDetails, userContext.details]);
 
     return (
         <div>
             <Box radiusless display="flex" shadowless marginless justifyContent="center" style={{ backgroundColor: "#905960" }}>
                 <Breadcrumb separator="bullet">
                     <Breadcrumb.Item active>
-                        <a style={{ color: "white", flexDirection:"column", marginInline:"10px" }}>
+                        <a style={{ color: "white", flexDirection: "column", marginInline: "10px" }}>
                             <strong>Contact Numbers</strong>
                             <div>
                                 <Icon size="small">
                                     <i className={`fas fa-phone`}></i>
                                 </Icon>
-                               +1 (236)-986-3592
+                                +1 (236)-986-3592
                             </div>
 
                         </a>
                     </Breadcrumb.Item>
 
                     <Breadcrumb.Item active>
-                        <a style={{ color: "white", flexDirection:"column", marginInline:"10px" }}>
+                        <a style={{ color: "white", flexDirection: "column", marginInline: "10px" }}>
                             <strong> Schedule</strong>
                             <div>
                                 <Icon size="small">
                                     <i className={`fas fa-calendar`}></i>
                                 </Icon>
-                               M-F 8am - 6pm / Saturday 9am - 3pm
+                                M-F 8am - 6pm / Saturday 9am - 3pm
                             </div>
 
                         </a>
                     </Breadcrumb.Item>
 
                     <Breadcrumb.Item active>
-                        <a style={{ color: "white", flexDirection:"column", marginInline:"10px" }}>
+                        <a style={{ color: "white", flexDirection: "column", marginInline: "10px" }}>
                             <strong> Delivery</strong>
                             <div>
                                 <Icon size="small">
                                     <i className={`fas fa-truck`}></i>
                                 </Icon>
-                               Sunday to Sunday
+                                Sunday to Sunday
                             </div>
 
                         </a>
@@ -80,12 +111,35 @@ function Header() {
                         </Navbar.Item>
                     </Navbar.Container>
                     <Navbar.Container align="right">
-                        <Navbar.Item href="/login">
-                            Login
-                        </Navbar.Item>
-                        <Navbar.Item href="/signup">
-                            SignUp
-                        </Navbar.Item>
+                        {
+                            userContext.details ?
+                                (
+                                    <>
+                                        <Navbar.Item>
+                                            <Icon size="large" style={{ color: "#905960" }}>
+                                                <i className={`fas fa-lg ${userContext.details.icon}`}></i>
+                                            </Icon>
+                                            <span>{userContext.details.username}</span>
+                                        </Navbar.Item>
+                                        <Navbar.Item>
+                                            <Button>
+                                                LogOut
+                                            </Button>
+                                        </Navbar.Item>
+                                    </>
+                                ) :
+                                (
+                                    <>
+                                        <Navbar.Item href="/login">
+                                            Login
+                                        </Navbar.Item>
+                                        <Navbar.Item href="/signup">
+                                            SignUp
+                                        </Navbar.Item>
+                                    </>
+                                )
+                        }
+
                     </Navbar.Container>
                 </Navbar.Menu>
             </Navbar>
