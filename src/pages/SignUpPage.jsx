@@ -1,7 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Section, Form, Icon, Button, Box } from "react-bulma-components"
+import { useLocation, useNavigate } from 'react-router-dom'
+import { UserContext } from "../context/UserContext"
+
 import Modal from '../components/notification/Modal';
+
 function SignUpPage() {
     //values fontawesome icons avatar
     const iconTie = "fa-user-tie";
@@ -37,8 +41,33 @@ function SignUpPage() {
 
     //end modal
 
+    //User Context
+    const [userContext, setUserContext] = useContext(UserContext)
+
     const submit = () => {
         if (confirmPassword === password) {
+            const body = { username, email, password, icon };
+            fetch("http://localhost:8000/api/user/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+                credentials: "include"
+            })
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error(res.status);
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setUserContext(prev => ({ ...prev, token: data.token }))
+                    let from = location.state?.from?.pathname || '/'
+                    navigate(from, { replace: true })
+                })
+                .catch((err) => {
+                    openModal("Error Signing Up!", "Username and/or Email already exists")
+                });
 
         } else {
             openModal("Incorrect Credentials", "Password and confirm password do not match. Try Again!")
@@ -74,7 +103,7 @@ function SignUpPage() {
     }, [password, confirmPassword])
     return (
         <Section mt={6} >
-            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor:"#feecf0" }}>
+            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor: "#feecf0" }}>
                 <form>
                     <Form.Label>Username</Form.Label>
                     <Form.Field kind="group">
@@ -85,7 +114,7 @@ function SignUpPage() {
                                 <option value="avatar 3">#3</option>
                                 <option value="avatar 4">#4</option>
                             </Form.Select>
-                            <Icon align='left' size="large" style={{color:"#905960"}} >
+                            <Icon align='left' size="large" style={{ color: "#905960" }} >
                                 <i className={`fas fa-lg ${icon && icon}`}></i>
                             </Icon>
                         </Form.Control>
