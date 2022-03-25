@@ -1,7 +1,8 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext} from 'react'
 import { Section, Form, Button, Box } from "react-bulma-components"
-import { Link } from 'react-router-dom';
+import { UserContext } from '../context/UserContext'
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from '../components/notification/Modal';
 function LoginPage() {
 
@@ -13,6 +14,9 @@ function LoginPage() {
     const [notiTitle, setNotiTitle] = useState("")
     const [notiBody, setNotiBody] = useState("")
 
+    const [userContext, setUserContext] = useContext(UserContext)
+
+    const navigate = useNavigate()
 
     const openModal = (title, message) => {
         setNotiTitle(title);
@@ -30,7 +34,28 @@ function LoginPage() {
     //end modal
 
     const submit = () => {
-        openModal("Confirmation Login", "Login Correct")
+        const body = { username, password };
+        fetch("http://localhost:8000/api/user/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+            credentials: "include"
+        })
+            .then(async (res) => {
+                if (!res.ok) {
+                    throw new Error(res.status);
+                } else {
+                    const data = await res.json()
+                    setUserContext(prev => ({ ...prev, token: data.token }))
+                    navigate("/")
+                    return data
+                }
+            })
+            .catch((err) => {
+                openModal("Error Login", "Username or password that you entered is incorrect. Use a valid credential and try again");
+                setUsername("")
+                setPassword("")
+            });
 
 
     }
@@ -43,9 +68,8 @@ function LoginPage() {
         }
     }, [password, username])
     return (
-        <Section mt={6} >   
-            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor:"#feecf0" }}>
-                <form>
+        <Section mt={6} >
+            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor: "#feecf0" }}>
                     <Form.Field>
                         <Form.Label>Username</Form.Label>
                         <Form.Control>
@@ -70,7 +94,6 @@ function LoginPage() {
                         >Login
                         </Button>
                     </Button.Group>
-                </form>
             </Box>
 
             <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal} />

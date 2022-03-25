@@ -36,6 +36,28 @@ function Header() {
         }
     }, [fetchUserDetails, userContext.details]);
 
+
+    //logout
+    const logoutHandler = () => {
+        fetch("http://localhost:8000/api/user/logout", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userContext.token}`,
+            },
+        }).then(async (response) => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+            else {
+                const data = await response.json()
+                setUserContext(prev => ({ ...prev, details: undefined, token: null }))
+            }
+
+        });
+    }
+
     return (
         <div>
             <Box radiusless display="flex" shadowless marginless justifyContent="center" style={{ backgroundColor: "#905960" }}>
@@ -122,7 +144,7 @@ function Header() {
                                             <span>{userContext.details.username}</span>
                                         </Navbar.Item>
                                         <Navbar.Item>
-                                            <Button>
+                                            <Button onClick={logoutHandler}>
                                                 LogOut
                                             </Button>
                                         </Navbar.Item>
