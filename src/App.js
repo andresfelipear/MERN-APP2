@@ -10,6 +10,7 @@ import DeliveryPolicy from './pages/DeliveryPolicy';
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import ForgotPassword from './pages/ForgotPassword';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/policy' element={<DeliveryPolicy />} />
+        <Route path='/forgotPassword' element={<ForgotPassword />} />
       </Routes>
       <Foot />
     </div>

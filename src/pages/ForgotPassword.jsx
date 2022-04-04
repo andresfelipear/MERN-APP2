@@ -1,10 +1,13 @@
 import React from 'react'
-import { Heading } from 'react-bulma-components'
+import { useState, useEffect } from 'react'
+import { Heading, Form, Button, Section, Box } from 'react-bulma-components'
+import { Link, useNavigate } from 'react-router-dom';
+import Modal from "../components/notification/Modal"
 
 function ForgotPassword() {
     const [username, setUsername] = useState("")
     const [status, setStatus] = useState("");
-
+    const [disabled, setDisabled] = useState(true)
     //modal
     const [notiTitle, setNotiTitle] = useState("")
     const [notiBody, setNotiBody] = useState("")
