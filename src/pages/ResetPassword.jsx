@@ -47,7 +47,7 @@ function ResetPassword() {
                     throw new Error(res.status);
                 } else {
                     setStatus("success");
-                    openModal("Password Confirm", "Please login with your new password");
+                    openModal("Reset Password Confirm", "Please login with your new password");
                 }
                 return res.json()
             })
