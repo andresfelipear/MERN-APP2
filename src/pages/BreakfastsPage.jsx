@@ -92,12 +92,12 @@ function BreakfastsPage() {
     return (
         <Section>
             {breakfasts.length > 0 ? (
-                <Columns m={4} multiline>
+                <Columns m={4} multiline gap={8}>
                     {breakfasts && breakfasts.map((breakfast) => {
                         return (
                             <Columns.Column size={"one-quarter"} key={breakfast._id}>
                                 <Card>
-                                    <Card.Image size="4by3" src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} />
+                                    <Card.Image size="square" src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} />
                                     <Card.Content flexDirection='column' display='flex' alignItems='center' justifyContent='center' style={{ paddingTop: "10px", minHeight: "226px" }}>
                                         <Box alignItems='center' shadowless display='flex' style={{ padding: "0px", margin: "0px" }}>
                                             {userContext.details ? (
@@ -124,7 +124,7 @@ function BreakfastsPage() {
                                         </Media>
 
                                         <Content textAlign="center">
-                                            <Link to={`/breakfast?id:${breakfast._id}`} style={{ color: "#905960", textDecoration: "underline" }}>Details</Link>
+                                            <Link to={`/breakfast?id=${breakfast._id}`} style={{ color: "#905960", textDecoration: "underline" }}>Details</Link>
                                         </Content>
                                     </Card.Content>
                                 </Card>
