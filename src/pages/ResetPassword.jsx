@@ -36,7 +36,7 @@ function ResetPassword() {
     const submit = () => {
         const body = { password, userId, token };
         console.log(body)
-        fetch("http://localhost:8000/api/user/resetPassword", {
+        fetch(process.env.REACT_APP_API_ENDPOINT+"api/user/resetPassword", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),

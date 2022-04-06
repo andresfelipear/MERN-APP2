@@ -40,7 +40,7 @@ function ContactPage() {
 
     const submit = () => {
         const body = { name, phone, email, message }
-        fetch("http://localhost:8000/api/user/contact", {
+        fetch(process.env.REACT_APP_API_ENDPOINT+"api/user/contact", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),

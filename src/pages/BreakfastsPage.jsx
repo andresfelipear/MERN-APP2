@@ -1,11 +1,24 @@
 import React, { useState } from 'react'
-import { Section, Container, Notification, Heading, } from "react-bulma-components"
+import { Section, Container, Notification, Heading, Columns, Card} from "react-bulma-components"
 
 function BreakfastsPage() {
-    const [Breakfasts, setBreakfasts] = useState("")
+    const [breakfasts, setBreakfasts] = useState("")
     return (
         <Section>
-            {Breakfasts.length > 0 ? (<></>) : (
+            {breakfasts.length > 0 ? (
+            <Columns m={4} multiline> 
+                {breakfasts && breakfasts.map((breakfast)=>{
+                    return(
+                        <Columns.Column size={"one-quarter"} key={breakfast._id}>
+                            <Card>
+                                <Card.Image size="4by3" src={`/images/breakfasts/${breakfast.Image}.${process.env.REACT_APP_API_FORMAT_IMAGES}`}/>
+                            </Card>
+
+                        </Columns.Column>
+
+                    )
+                })}
+            </Columns>) : (
                 <>
                     <Container backgroundColor='light' mt={6} style={{ width: "35vw", margin: auto, padding: "20px 20px", borderRadius: "10px" }}>
                         <Notification>

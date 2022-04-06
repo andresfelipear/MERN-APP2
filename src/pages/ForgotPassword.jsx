@@ -35,7 +35,7 @@ function ForgotPassword() {
 
     const submit = () => {
         const body = { username };
-        fetch("http://localhost:8000/api/user/forgot", {
+        fetch(process.env.REACT_APP_API_ENDPOINT+"api/user/forgot", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
