@@ -120,7 +120,7 @@ function Header() {
                                 More
                             </Navbar.Link>
                             <Navbar.Dropdown>
-                                <Navbar.Item>
+                                <Navbar.Item href="/breakfasts">
                                     Breakfasts
                                 </Navbar.Item>
                                 <Navbar.Item href="/policy">

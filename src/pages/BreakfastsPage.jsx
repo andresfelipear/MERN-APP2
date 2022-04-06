@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
-import { Section, Container, Notification, Heading, Columns, Card, Button, Box, Media, Content, Icon } from "react-bulma-components"
+import { Section, Container, Notification, Heading, Columns, Card, Box, Media, Content, Icon } from "react-bulma-components"
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext';
 import Modal from '../components/notification/Modal';
 
 function BreakfastsPage() {
     const [breakfasts, setBreakfasts] = useState([])
-    const [fetchData, setFetchData] = useState(true)
+    const [fetchData, setFetchData] = useState(false)
     const [userContext, setUserContext] = useContext(UserContext);
     const [loading, setLoading] = useState(false)
 
@@ -16,8 +16,31 @@ function BreakfastsPage() {
 
     const navigate = useNavigate()
 
-    const submitLike = () => {
-        console.log("hola")
+    const submitLike = (id) => {
+        const breakfastId = id;
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/admin/like-breakfast", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userContext.token}`,
+            },
+            body: JSON.stringify({ breakfastId }),
+            credentials: "include",
+
+        }).then(async (response) => {
+            if (response.ok) {
+                await response.json;
+                setFetchData(true);
+                const newBreakfasts = JSON.parse(JSON.stringify(breakfasts))
+                const breakfast = newBreakfasts.filter(breakfast=>breakfast._id===breakfastId);
+                breakfast[0].likes = breakfast[0].likes+1;
+                setBreakfasts(newBreakfasts)
+            }
+            else {
+                openModal("Unauthenticated User", "You should be authenticated for like a Post")
+            }
+        })
+
 
     }
 
@@ -75,7 +98,7 @@ function BreakfastsPage() {
                             <Columns.Column size={"one-quarter"} key={breakfast._id}>
                                 <Card>
                                     <Card.Image size="4by3" src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} />
-                                    <Card.Content flexDirection='column' display='flex' alignItems='center' justifyContent='center' style={{ paddingTop: "10px", minHeight:"226px" }}>
+                                    <Card.Content flexDirection='column' display='flex' alignItems='center' justifyContent='center' style={{ paddingTop: "10px", minHeight: "226px" }}>
                                         <Box alignItems='center' shadowless display='flex' style={{ padding: "0px", margin: "0px" }}>
                                             {userContext.details ? (
                                                 <Icon size='medium' onClick={() => { submitLike(breakfast._id) }} >
