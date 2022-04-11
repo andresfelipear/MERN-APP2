@@ -9,10 +9,12 @@ import DeliveryPolicy from './pages/DeliveryPolicy';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import BreakfastsPage from './pages/BreakfastsPage';
+import DetailsBreakfastPage from './pages/DetailsBreakfastPage';
 
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback } from 'react'
 import { Routes, Route } from 'react-router-dom'
+
 
 
 
@@ -65,6 +67,7 @@ function App() {
         <Route path='/forgotPassword' element={<ForgotPassword />} />
         <Route path='/resetPassword' element={<ResetPassword />} />
         <Route path='/breakfasts' element={<BreakfastsPage/>}/>
+        <Route path='/breakfast' element={<DetailsBreakfastPage/>}/>
       </Routes>
       <Foot />
     </div>

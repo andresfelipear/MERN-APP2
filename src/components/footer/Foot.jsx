@@ -2,7 +2,6 @@ import React from 'react'
 import { Footer, Breadcrumb, Box, Icon, Image, Heading } from "react-bulma-components"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faFacebook, faInstagram} from "@fortawesome/free-brands-svg-icons"
-// import {solid, regular, brands} from "@fortawesome/fontawesome-svg-core/import.macro"
 function Foot() {
     return (
         <Footer style={{ paddingInline: "0px" }} textAlign="center" backgroundColor='white'>
