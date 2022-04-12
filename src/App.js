@@ -9,7 +9,7 @@ import DeliveryPolicy from './pages/DeliveryPolicy';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import BreakfastsPage from './pages/BreakfastsPage';
-import DetailsBreakfastPage from './pages/DetailsBreakfastPage';
+import DetailsBreakfastPage from './pages/detailsBreakfastPage/DetailsBreakfastPage';
 
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback } from 'react'
