@@ -1,10 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Notification, Heading, Section, Box, Image, Icon, Form, Button } from "react-bulma-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from "@fortawesome/free-regular-svg-icons"
+import { UserContext } from '../../context/UserContext'
 import Modal from '../../components/notification/Modal';
 import "./DetailsBreakfastPage.css"
+
 function DetailsBreakfastPage() {
     const [searchParams] = useSearchParams()
     const breakfastId = searchParams.get('id')
@@ -14,6 +16,11 @@ function DetailsBreakfastPage() {
     const [notiTitle, setNotiTitle] = useState("")
     const [notiBody, setNotiBody] = useState("")
     const [quantity, setQuantity] = useState(1)
+
+    const [userContext, setUserContext] = useContext(UserContext)
+
+    //Navigate
+    const navigate = useNavigate()
 
     const fetchBreakfast = useCallback(() => {
         setLoading(true);
@@ -54,6 +61,29 @@ function DetailsBreakfastPage() {
         modalContainer.classList.add("is-active");
         setNotiTitle(title);
         setNotiBody(message);
+    }
+
+    //add item cart
+    const submit = () =>{
+        const body = {quantity, breakfast}
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/addProduct", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ quantity }),
+            credentials: "include",
+
+        }).then(async (response) => {
+            if (response.ok) {
+                await response.json;
+                setUserContext(prev => ({ ...prev, cartId: response.cartId }))
+                navigate("/")
+            }
+            else {
+                openModal("Update Cart Error", "Something happened, try again!")
+            }
+        })
     }
 
 
@@ -99,7 +129,7 @@ function DetailsBreakfastPage() {
                                 </Form.Select>
                             </Form.Field>
 
-                            <Button style={{color:"#905960", borderColor:"#905960", fontWeight:"500"}}>ADD TO THE CART</Button>
+                            <Button onClick={submit} style={{color:"#905960", borderColor:"#905960", fontWeight:"500"}}>ADD TO THE CART</Button>
 
                         </div>
                     </div>
