@@ -14,3 +14,7 @@ code {
     monospace;
 }
 
+.tableCart img{
+  width: 150px;
+  height: 200px;
+}

@@ -1,8 +1,10 @@
 
 import "./Header.css"
-import React, { useCallback, useContext, useEffect} from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Navbar, Box, Breadcrumb, Icon, Button } from "react-bulma-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {faCartShopping} from "@fortawesome/free-solid-svg-icons"
 
 function Header() {
 
@@ -161,7 +163,11 @@ function Header() {
                                     </>
                                 )
                         }
-
+                        <Navbar.Item href="/shopping-cart"> 
+                            <Icon size="large" style={{ color: "#905960" }}>
+                                <FontAwesomeIcon size="lg" icon={faCartShopping} />
+                            </Icon>
+                        </Navbar.Item>
                     </Navbar.Container>
                 </Navbar.Menu>
             </Navbar>

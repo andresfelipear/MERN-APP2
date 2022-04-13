@@ -66,12 +66,12 @@ function DetailsBreakfastPage() {
     //add item cart
     const submit = () =>{
         const body = {quantity, breakfast}
-        fetch(process.env.REACT_APP_API_ENDPOINT + "api/addProduct", {
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/addItem", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ quantity }),
+            body: JSON.stringify(body),
             credentials: "include",
 
         }).then(async (response) => {

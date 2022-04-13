@@ -14,6 +14,7 @@ import DetailsBreakfastPage from './pages/detailsBreakfastPage/DetailsBreakfastP
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import ShoppingCart from './pages/ShoppingCart';
 
 
 
@@ -68,6 +69,7 @@ function App() {
         <Route path='/resetPassword' element={<ResetPassword />} />
         <Route path='/breakfasts' element={<BreakfastsPage/>}/>
         <Route path='/breakfast' element={<DetailsBreakfastPage/>}/>
+        <Route path='/shopping-cart' element={<ShoppingCart/>}/>
       </Routes>
       <Foot />
     </div>
