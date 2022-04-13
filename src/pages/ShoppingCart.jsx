@@ -10,10 +10,11 @@ function ShoppingCart() {
     const [notiTitle, setNotiTitle] = useState("")
     const [notiBody, setNotiBody] = useState("")
     const [cart, setCart] = useState()
+    const [updQuantity, setUpdQuantity] = useState(false)
 
     const fetchCart = useCallback(() => {
         setLoading(true);
-        //fetch breakfast
+        //fetch cart
         fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart`, {
             method: "GET",
             credentials: "include",
@@ -39,6 +40,31 @@ function ShoppingCart() {
         }
     }, [cart]);
 
+    useEffect(() => {
+        if (updQuantity) {
+            
+            //fetch cart
+            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then(async (response) => {
+                if (response.ok) {
+                    const data = await response.json();
+                    setCart(data.cart)
+                }
+                else {
+                    openModal("Error", "fetching data (breakfast)")
+                }
+            }).catch(err => { console.log(err); setLoading(false) });
+            setUpdQuantity(false);
+        }
+    },[updQuantity])
+
+
+
 
     const closeModal = () => {
         const modalContainer = document.getElementById("modal-container");
@@ -52,12 +78,35 @@ function ShoppingCart() {
         setNotiBody(message);
     }
 
-    const removeItem = () => {
+    const updateQuantity = (quantity, breakfast) => {
+        const body = { quantity, breakfast };
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/addItem", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+            credentials: "include",
 
+        }).then((response) => {
+            if (response.ok) {
+                setUpdQuantity(true)
+            }
+            else {
+                openModal("Update Cart Error", "Something happened, try again!")
+            }
+        })
     }
 
-    const addItem = () => {
+    const removeItem = (breakfast) => {
+        const quantity = -1;
+        updateQuantity(quantity, breakfast)
+        
+    }
 
+    const addItem = (breakfast) => {
+        const quantity = 1;
+        updateQuantity(quantity, breakfast)
     }
 
     if (loading) {
@@ -71,7 +120,7 @@ function ShoppingCart() {
         <>
             {cart && (
                 <>
-                    <Table mt={4} ml="auto" mr="auto" size='fullwidth' style={{maxWidth:'1000px'}} >
+                    <Table mt={4} ml="auto" mr="auto" size='fullwidth' style={{ maxWidth: '1000px' }} >
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -91,10 +140,10 @@ function ShoppingCart() {
                                         </td>
                                         <td style={{ verticalAlign: "middle" }} >{breakfast.Name}</td>
                                         <td style={{ verticalAlign: "middle" }} >
-                                            <div style={{display:"flex"}}>
-                                                <div style={{cursor:'pointer'}} onClick={() => removeItem()}>&#10094;</div>
-                                                <span style={{marginInline:'10px'}}>{product.quantity}</span>
-                                                <div style={{cursor:'pointer'}} onClick={() => addItem()}>&#10095;</div>
+                                            <div style={{ display: "flex" }}>
+                                                <div style={{ cursor: 'pointer' }} onClick={() => removeItem(breakfast)}>&#10094;</div>
+                                                <span style={{ marginInline: '10px' }}>{product.quantity}</span>
+                                                <div style={{ cursor: 'pointer' }} onClick={() => addItem(breakfast)}>&#10095;</div>
                                             </div>
 
                                         </td>
