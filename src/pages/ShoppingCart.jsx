@@ -52,6 +52,14 @@ function ShoppingCart() {
         setNotiBody(message);
     }
 
+    const removeItem = () => {
+
+    }
+
+    const addItem = () => {
+
+    }
+
     if (loading) {
         return (
             <Notification>
@@ -63,7 +71,7 @@ function ShoppingCart() {
         <>
             {cart && (
                 <>
-                    <Table mt={4} size='fullwidth' marginless >
+                    <Table mt={4} ml="auto" mr="auto" size='fullwidth' style={{maxWidth:'1000px'}} >
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -82,7 +90,14 @@ function ShoppingCart() {
                                             <Image className='tableCart' src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} />
                                         </td>
                                         <td style={{ verticalAlign: "middle" }} >{breakfast.Name}</td>
-                                        <td style={{ verticalAlign: "middle" }} >{product.quantity}</td>
+                                        <td style={{ verticalAlign: "middle" }} >
+                                            <div style={{display:"flex"}}>
+                                                <div style={{cursor:'pointer'}} onClick={() => removeItem()}>&#10094;</div>
+                                                <span style={{marginInline:'10px'}}>{product.quantity}</span>
+                                                <div style={{cursor:'pointer'}} onClick={() => addItem()}>&#10095;</div>
+                                            </div>
+
+                                        </td>
                                         <td style={{ verticalAlign: "middle" }} >{product.price}</td>
                                         <td style={{ verticalAlign: "middle" }} >
                                             <Icon size="large" style={{ color: "#905960" }}>
