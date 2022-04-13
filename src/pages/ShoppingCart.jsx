@@ -109,6 +109,11 @@ function ShoppingCart() {
         updateQuantity(quantity, breakfast)
     }
 
+    const deleteItem = (breakfast, quantity) =>{
+        const revQuantity = quantity*(-1);
+        updateQuantity(revQuantity, breakfast) 
+    }
+
     if (loading) {
         return (
             <Notification>
@@ -149,7 +154,7 @@ function ShoppingCart() {
                                         </td>
                                         <td style={{ verticalAlign: "middle" }} >{product.price}</td>
                                         <td style={{ verticalAlign: "middle" }} >
-                                            <Icon size="large" style={{ color: "#905960" }}>
+                                            <Icon onClick={()=>deleteItem(breakfast, product.quantity)} size="large" style={{ color: "#905960", cursor:'pointer' }}>
                                                 <FontAwesomeIcon size="lg" icon={faXmark} />
                                             </Icon>
                                         </td>
