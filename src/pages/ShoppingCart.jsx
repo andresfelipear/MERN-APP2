@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState, useCallback, useEffect } from 'react'
-import { Table, Notification, Heading, Icon, Image } from 'react-bulma-components'
+import React, { useState, useCallback, useEffect, useContext } from 'react'
+import { Table, Notification, Heading, Icon, Image, Button } from 'react-bulma-components'
 import Modal from '../components/notification/Modal'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { UserContext } from "../context/UserContext"
+import { useNavigate } from 'react-router-dom'
 
 function ShoppingCart() {
 
@@ -12,37 +14,53 @@ function ShoppingCart() {
     const [cart, setCart] = useState()
     const [updQuantity, setUpdQuantity] = useState(false)
 
+    const [userContext, setUserContext] = useContext(UserContext)
+    const [getCart, setGetCart] = useState(true)
+
+    //Navigate
+    const navigate = useNavigate()
+
     const fetchCart = useCallback(() => {
-        setLoading(true);
-        //fetch cart
-        fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(async (response) => {
-            if (response.ok) {
-                const data = await response.json();
-                setCart(data.cart)
-                setLoading(false);
-            }
-            else {
-                openModal("Error", "fetching data (breakfast)")
-                setLoading(false);
-            }
-        }).catch(err => { console.log(err); setLoading(false) });
-    }, [cart])
+        console.log(userContext)
+        if (userContext.details) {
+            setGetCart(false)
+            setLoading(true);
+            const userId = userContext.details ? userContext.details._id : undefined
+            //fetch cart
+            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then(async (response) => {
+                if (response.ok) {
+                    const data = await response.json();
+                    setCart(data.cart)
+                    setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
+                    setLoading(false);
+                }
+                else {
+                    openModal("Error", "fetching data (breakfast)")
+                    setLoading(false);
+                }
+            }).catch(err => { console.log(err); setLoading(false) });
+        } else {
+            setGetCart(true)
+        }
+
+    }, [getCart])
 
     useEffect(() => {
-        if (cart === undefined) {
-            fetchCart();
+        setGetCart(false)
+        if (setGetCart && userContext.details) {
+            fetchCart()
         }
-    }, [cart]);
+    }, [setGetCart, getCart, userContext.details])
 
     useEffect(() => {
         if (updQuantity) {
-            
+
             //fetch cart
             fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart`, {
                 method: "GET",
@@ -54,6 +72,7 @@ function ShoppingCart() {
                 if (response.ok) {
                     const data = await response.json();
                     setCart(data.cart)
+                    setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
                 }
                 else {
                     openModal("Error", "fetching data (breakfast)")
@@ -61,9 +80,7 @@ function ShoppingCart() {
             }).catch(err => { console.log(err); setLoading(false) });
             setUpdQuantity(false);
         }
-    },[updQuantity])
-
-
+    }, [updQuantity])
 
 
     const closeModal = () => {
@@ -72,14 +89,17 @@ function ShoppingCart() {
     }
 
     const openModal = (title, message) => {
-        const modalContainer = document.getElementById("modal-container");
-        modalContainer.classList.add("is-active");
         setNotiTitle(title);
         setNotiBody(message);
+        const modalContainer = document.getElementById("modal-container");
+        modalContainer.classList.add("is-active");
+
     }
 
     const updateQuantity = (quantity, breakfast) => {
-        const body = { quantity, breakfast };
+        const userId = userContext.details ? userContext.details._id : undefined;
+        const cartId = userContext.cartId ? userContext.cartId : undefined;
+        const body = { quantity, breakfast, userId, cartId }
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/addItem", {
             method: "POST",
             headers: {
@@ -101,7 +121,7 @@ function ShoppingCart() {
     const removeItem = (breakfast) => {
         const quantity = -1;
         updateQuantity(quantity, breakfast)
-        
+
     }
 
     const addItem = (breakfast) => {
@@ -109,9 +129,18 @@ function ShoppingCart() {
         updateQuantity(quantity, breakfast)
     }
 
-    const deleteItem = (breakfast, quantity) =>{
-        const revQuantity = quantity*(-1);
-        updateQuantity(revQuantity, breakfast) 
+    const deleteItem = (breakfast, quantity) => {
+        const revQuantity = quantity * (-1);
+        updateQuantity(revQuantity, breakfast)
+    }
+
+    const checkOut = () => {
+        if (userContext.details) {
+
+
+        } else {
+            navigate("/login")
+        }
     }
 
     if (loading) {
@@ -154,7 +183,7 @@ function ShoppingCart() {
                                         </td>
                                         <td style={{ verticalAlign: "middle" }} >{product.price}</td>
                                         <td style={{ verticalAlign: "middle" }} >
-                                            <Icon onClick={()=>deleteItem(breakfast, product.quantity)} size="large" style={{ color: "#905960", cursor:'pointer' }}>
+                                            <Icon onClick={() => deleteItem(breakfast, product.quantity)} size="large" style={{ color: "#905960", cursor: 'pointer' }}>
                                                 <FontAwesomeIcon size="lg" icon={faXmark} />
                                             </Icon>
                                         </td>
@@ -180,6 +209,10 @@ function ShoppingCart() {
                     <Heading textAlign="center" size={2} weight="normal">
                         {`TOTAL: $${cart.totalPrice}`}
                     </Heading>
+                    <div style={{ display: 'flex', justifyContent: 'right', maxWidth: '1000px', margin: 'auto' }}>
+                        <Button onClick={checkOut} marginless style={{ backgroundColor: '#905960', color: 'white', borderRadius: '5px' }}>Proceed to Check Out</Button>
+                    </div>
+
                 </>
 
             )}

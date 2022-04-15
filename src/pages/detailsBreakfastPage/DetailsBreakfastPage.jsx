@@ -65,7 +65,10 @@ function DetailsBreakfastPage() {
 
     //add item cart
     const submit = () =>{
-        const body = {quantity, breakfast}
+        console.log(userContext)
+        const userId = userContext.details?userContext.details._id:undefined;
+        const cartId = userContext.cartId?userContext.cartId:undefined;
+        const body = {quantity, breakfast, userId, cartId}
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/addItem", {
             method: "POST",
             headers: {
