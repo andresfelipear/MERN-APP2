@@ -11,7 +11,7 @@ import ResetPassword from './pages/ResetPassword';
 import BreakfastsPage from './pages/BreakfastsPage';
 import DetailsBreakfastPage from './pages/detailsBreakfastPage/DetailsBreakfastPage';
 import ShoppingCart from './pages/ShoppingCart';
-import CheckoutPage from './pages/CheckoutPage';
+import CheckoutPage from './pages/checkoutPage/CheckoutPage';
 
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback, useState } from 'react'
