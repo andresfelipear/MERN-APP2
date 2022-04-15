@@ -53,7 +53,7 @@ function ShoppingCart() {
             fetchCart()
         }
 
-    }, [getCart, userContext.cartId])
+    }, [ userContext.cartId])
 
     useEffect(() => {
         if (updQuantity) {
