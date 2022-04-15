@@ -47,7 +47,8 @@ function App() {
 
   const getCartId = useCallback(async() => {
     await setGetCart(false)
-    if (userContext.details || attempts < -100) {
+    if (userContext.details || attempts < -8) {
+      setAttempts(5)
       const userId = userContext.details ? userContext.details._id : undefined
       //fetch cart
       fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
@@ -82,7 +83,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (!userContext.cartId || userContext.details) {
+    if (!userContext.cartId && (userContext.token==null || (userContext.details))) {
       decressAttempts()
       getCartId()
     }

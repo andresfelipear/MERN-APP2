@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { Table, Notification, Heading, Icon, Image, Button } from 'react-bulma-components'
 import Modal from '../components/notification/Modal'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -15,16 +15,45 @@ function ShoppingCart() {
     const [updQuantity, setUpdQuantity] = useState(false)
 
     const [userContext, setUserContext] = useContext(UserContext)
-
+    const [getCart, setGetCart] = useState(true)
+    const [attempts, setAttempts] = useState(5)
     //Navigate
     const navigate = useNavigate()
 
+    const fetchCart = useCallback(async () => {
+        console.log(userContext)
+            setLoading(true);
+            setAttempts(5)
+            const userId = userContext.details ? userContext.details._id : undefined
+            const cartId = userContext.cartId ? userContext.cartId : undefined
+            //fetch cart
+            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}/?cartId=${cartId}`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then(async (response) => {
+                if (response.ok) {
+                    const data = await response.json();
+                    setCart(data.cart)
+                    setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
+                    setLoading(false);
+                }
+                else {
+                    openModal("Error", "fetching data (breakfast)")
+                    setLoading(false);
+                }
+            }).catch(err => { console.log(err); setLoading(false) });
+        
+    }, [userContext.cartId])
+
     useEffect(() => {
-        if (userContext.cartId && userContext.cart) {
-            setCart(userContext.cart)
+        if (userContext.cartId && cart===undefined) {
+            fetchCart()
         }
 
-    }, [userContext.cartId, userContext.cart])
+    }, [getCart, userContext.cartId])
 
     useEffect(() => {
         if (updQuantity) {
