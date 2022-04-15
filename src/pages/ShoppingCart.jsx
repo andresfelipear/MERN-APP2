@@ -16,14 +16,13 @@ function ShoppingCart() {
 
     const [userContext, setUserContext] = useContext(UserContext)
     const [getCart, setGetCart] = useState(true)
-
+    const [attempts, setAttempts] = useState(5)
     //Navigate
     const navigate = useNavigate()
 
-    const fetchCart = useCallback(() => {
-        console.log(userContext)
-        if (userContext.details) {
-            setGetCart(false)
+    const fetchCart = useCallback(async() => {
+        await setGetCart(false)
+        if (userContext.details || attempts<-100) {
             setLoading(true);
             const userId = userContext.details ? userContext.details._id : undefined
             //fetch cart
@@ -46,14 +45,20 @@ function ShoppingCart() {
                 }
             }).catch(err => { console.log(err); setLoading(false) });
         } else {
-            setGetCart(true)
+            await setGetCart(true)
         }
 
     }, [getCart])
 
+    const decressAttempts = async()=>{
+        const newAttempts = attempts-1;
+        await setAttempts(newAttempts);
+        return newAttempts;
+    }
+
     useEffect(() => {
-        setGetCart(false)
-        if (setGetCart && userContext.details) {
+        if (setGetCart || userContext.details) {
+            decressAttempts()
             fetchCart()
         }
     }, [setGetCart, getCart, userContext.details])
