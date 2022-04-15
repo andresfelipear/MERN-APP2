@@ -20,11 +20,11 @@ function ShoppingCart() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (userContext.cartId && userContext.cart && userContext.details) {
+        if (userContext.cartId && userContext.cart) {
             setCart(userContext.cart)
         }
 
-    }, [userContext.details, userContext.cartId, userContext.cart])
+    }, [userContext.cartId, userContext.cart])
 
     useEffect(() => {
         if (updQuantity) {
