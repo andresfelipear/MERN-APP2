@@ -179,7 +179,7 @@ function ShoppingCart() {
                                             </div>
 
                                         </td>
-                                        <td style={{ verticalAlign: "middle" }} >{product.price}</td>
+                                        <td style={{ verticalAlign: "middle" }} >${product.price}</td>
                                         <td style={{ verticalAlign: "middle" }} >
                                             <Icon onClick={() => deleteItem(breakfast, product.quantity)} size="large" style={{ color: "#905960", cursor: 'pointer' }}>
                                                 <FontAwesomeIcon size="lg" icon={faXmark} />
