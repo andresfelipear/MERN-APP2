@@ -12,7 +12,7 @@ function Header() {
 
 
     const fetchUserDetails = useCallback(() => {
-        fetch(process.env.REACT_APP_API_ENDPOINT +"me", {
+        fetch(process.env.REACT_APP_API_ENDPOINT +"api/user/me", {
             method: "GET",
             credentials: "include",
             headers: {
@@ -42,7 +42,7 @@ function Header() {
 
     //logout
     const logoutHandler = () => {
-        fetch(process.env.REACT_APP_API_ENDPOINT +"logout", {
+        fetch(process.env.REACT_APP_API_ENDPOINT +"api/user/logout", {
             method: "GET",
             credentials: "include",
             headers: {

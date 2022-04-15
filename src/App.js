@@ -25,7 +25,7 @@ function App() {
   const [userContext, setUserContext] = useContext(UserContext)
 
   const verifyUser = useCallback(() => {
-    fetch(process.env.REACT_APP_API_ENDPOINT + "refreshToken", {
+    fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/refreshToken", {
       method: 'POST',
       credentials: "include",
       header: { "Content-Type": "application/json" }
@@ -55,20 +55,24 @@ function App() {
     }).then(async (response) => {
       if (response.ok) {
         const data = await response.json();
-        if(data.cart!== null){
+        if (data.cart !== null) {
           setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
-        }else{
+        } else {
           setUserContext(prev => ({ ...prev, cartId: null }))
         }
-        
+
       }
       else {
         setUserContext(prev => ({ ...prev, cartId: null }))
       }
-    }).catch(err => { console.log(err)});
+    }).catch(err => { console.log(err) });
   }, [setUserContext])
 
-  useEffect(() => getCartId(), [getCartId])
+  useEffect(() => {
+    if (!userContext.cartId) {
+      getCartId()
+    }
+  }, [getCartId])
 
   const syncLogout = useCallback(event => {
     if (event.key === 'logout') {
