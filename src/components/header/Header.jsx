@@ -55,7 +55,7 @@ function Header() {
             }
             else {
                 const data = await response.json()
-                setUserContext(prev => ({ ...prev, details: undefined, token: null }))
+                setUserContext(prev => ({ ...prev, details: undefined, token: null, cartId: null }))
             }
 
         });

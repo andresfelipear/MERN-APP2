@@ -12,7 +12,7 @@ import BreakfastsPage from './pages/BreakfastsPage';
 import DetailsBreakfastPage from './pages/detailsBreakfastPage/DetailsBreakfastPage';
 
 import { UserContext } from './context/UserContext'
-import { useContext, useEffect, useCallback } from 'react'
+import { useContext, useEffect, useCallback, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import ShoppingCart from './pages/ShoppingCart';
 
@@ -23,6 +23,8 @@ import ShoppingCart from './pages/ShoppingCart';
 function App() {
 
   const [userContext, setUserContext] = useContext(UserContext)
+  const [attempts, setAttempts] = useState(5)
+  const [getCart, setGetCart] = useState(true)
 
   const verifyUser = useCallback(() => {
     fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/refreshToken", {
@@ -43,36 +45,48 @@ function App() {
 
   useEffect(() => verifyUser(), [verifyUser])
 
-  const getCartId = useCallback(() => {
-    const userId = userContext.details ? userContext.details._id : undefined
-    //fetch cart
-    fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(async (response) => {
-      if (response.ok) {
-        const data = await response.json();
-        if (data.cart !== null) {
-          setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
-        } else {
+  const getCartId = useCallback(async() => {
+    await setGetCart(false)
+    if (userContext.details || attempts < -100) {
+      const userId = userContext.details ? userContext.details._id : undefined
+      //fetch cart
+      fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(async (response) => {
+        if (response.ok) {
+          const data = await response.json();
+          if (data.cart !== null) {
+            setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart:data.cart }))
+          } else {
+            setUserContext(prev => ({ ...prev, cartId: null }))
+          }
+
+        }
+        else {
           setUserContext(prev => ({ ...prev, cartId: null }))
         }
+      }).catch(err => { console.log(err) });
+    }else{
+      await setGetCart(true)
+    }
+  }, [getCart])
 
-      }
-      else {
-        setUserContext(prev => ({ ...prev, cartId: null }))
-      }
-    }).catch(err => { console.log(err) });
-  }, [setUserContext])
+  const decressAttempts = async () => {
+    const newAttempts = attempts - 1;
+    await setAttempts(newAttempts);
+    return newAttempts;
+  }
 
   useEffect(() => {
-    if (!userContext.cartId) {
+    if (!userContext.cartId || userContext.details) {
+      decressAttempts()
       getCartId()
     }
-  }, [getCartId])
+  }, [getCartId, userContext.details, getCart, setGetCart])
 
   const syncLogout = useCallback(event => {
     if (event.key === 'logout') {

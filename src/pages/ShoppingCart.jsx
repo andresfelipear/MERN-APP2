@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState, useCallback, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Table, Notification, Heading, Icon, Image, Button } from 'react-bulma-components'
 import Modal from '../components/notification/Modal'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -15,54 +15,16 @@ function ShoppingCart() {
     const [updQuantity, setUpdQuantity] = useState(false)
 
     const [userContext, setUserContext] = useContext(UserContext)
-    const [getCart, setGetCart] = useState(true)
-    const [attempts, setAttempts] = useState(5)
+
     //Navigate
     const navigate = useNavigate()
 
-    const fetchCart = useCallback(async() => {
-        await setGetCart(false)
-        if (userContext.details || attempts<-100) {
-            setLoading(true);
-            setAttempts(5)
-            const userId = userContext.details ? userContext.details._id : undefined
-            //fetch cart
-            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then(async (response) => {
-                if (response.ok) {
-                    const data = await response.json();
-                    setCart(data.cart)
-                    setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
-                    setLoading(false);
-                }
-                else {
-                    openModal("Error", "fetching data (breakfast)")
-                    setLoading(false);
-                }
-            }).catch(err => { console.log(err); setLoading(false) });
-        } else {
-            await setGetCart(true)
-        }
-
-    }, [getCart])
-
-    const decressAttempts = async()=>{
-        const newAttempts = attempts-1;
-        await setAttempts(newAttempts);
-        return newAttempts;
-    }
-
     useEffect(() => {
-        if (setGetCart || userContext.details) {
-            decressAttempts()
-            fetchCart()
+        if (userContext.cartId && userContext.cart && userContext.details) {
+            setCart(userContext.cart)
         }
-    }, [setGetCart, getCart, userContext.details])
+
+    }, [userContext.details, userContext.cartId, userContext.cart])
 
     useEffect(() => {
         if (updQuantity) {
@@ -83,7 +45,7 @@ function ShoppingCart() {
                 else {
                     openModal("Error", "fetching data (breakfast)")
                 }
-            }).catch(err => { console.log(err)});
+            }).catch(err => { console.log(err) });
             setUpdQuantity(false);
         }
     }, [updQuantity])
