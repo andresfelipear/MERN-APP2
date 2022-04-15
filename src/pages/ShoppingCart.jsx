@@ -24,6 +24,7 @@ function ShoppingCart() {
         await setGetCart(false)
         if (userContext.details || attempts<-100) {
             setLoading(true);
+            setAttempts(5)
             const userId = userContext.details ? userContext.details._id : undefined
             //fetch cart
             fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
@@ -65,9 +66,9 @@ function ShoppingCart() {
 
     useEffect(() => {
         if (updQuantity) {
-
+            const userId = userContext.details ? userContext.details._id : undefined
             //fetch cart
-            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart`, {
+            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -105,6 +106,7 @@ function ShoppingCart() {
         const userId = userContext.details ? userContext.details._id : undefined;
         const cartId = userContext.cartId ? userContext.cartId : undefined;
         const body = { quantity, breakfast, userId, cartId }
+        
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/addItem", {
             method: "POST",
             headers: {
