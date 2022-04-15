@@ -25,7 +25,7 @@ function App() {
   const [userContext, setUserContext] = useContext(UserContext)
 
   const verifyUser = useCallback(() => {
-    fetch("http://localhost:8000/api/user/refreshToken", {
+    fetch(process.env.REACT_APP_API_ENDPOINT + "refreshToken", {
       method: 'POST',
       credentials: "include",
       header: { "Content-Type": "application/json" }
@@ -42,6 +42,33 @@ function App() {
   }, [setUserContext])
 
   useEffect(() => verifyUser(), [verifyUser])
+
+  const getCartId = useCallback(() => {
+    const userId = userContext.details ? userContext.details._id : undefined
+    //fetch cart
+    fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (response) => {
+      if (response.ok) {
+        const data = await response.json();
+        if(data.cart!== null){
+          setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
+        }else{
+          setUserContext(prev => ({ ...prev, cartId: null }))
+        }
+        
+      }
+      else {
+        setUserContext(prev => ({ ...prev, cartId: null }))
+      }
+    }).catch(err => { console.log(err)});
+  }, [setUserContext])
+
+  useEffect(() => getCartId(), [getCartId])
 
   const syncLogout = useCallback(event => {
     if (event.key === 'logout') {
@@ -67,9 +94,9 @@ function App() {
         <Route path='/policy' element={<DeliveryPolicy />} />
         <Route path='/forgotPassword' element={<ForgotPassword />} />
         <Route path='/resetPassword' element={<ResetPassword />} />
-        <Route path='/breakfasts' element={<BreakfastsPage/>}/>
-        <Route path='/breakfast' element={<DetailsBreakfastPage/>}/>
-        <Route path='/shopping-cart' element={<ShoppingCart/>}/>
+        <Route path='/breakfasts' element={<BreakfastsPage />} />
+        <Route path='/breakfast' element={<DetailsBreakfastPage />} />
+        <Route path='/shopping-cart' element={<ShoppingCart />} />
       </Routes>
       <Foot />
     </div>

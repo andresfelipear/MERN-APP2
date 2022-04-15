@@ -65,7 +65,6 @@ function DetailsBreakfastPage() {
 
     //add item cart
     const submit = () =>{
-        console.log(userContext)
         const userId = userContext.details?userContext.details._id:undefined;
         const cartId = userContext.cartId?userContext.cartId:undefined;
         const body = {quantity, breakfast, userId, cartId}
@@ -80,7 +79,7 @@ function DetailsBreakfastPage() {
         }).then(async (response) => {
             if (response.ok) {
                 await response.json;
-                setUserContext(prev => ({ ...prev, cartId: response.cartId }))
+                await setUserContext(prev => ({ ...prev, cartId: response.cartId }))
                 navigate("/")
             }
             else {

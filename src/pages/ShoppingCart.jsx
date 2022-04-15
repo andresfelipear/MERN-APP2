@@ -83,7 +83,7 @@ function ShoppingCart() {
                 else {
                     openModal("Error", "fetching data (breakfast)")
                 }
-            }).catch(err => { console.log(err); setLoading(false) });
+            }).catch(err => { console.log(err)});
             setUpdQuantity(false);
         }
     }, [updQuantity])
@@ -106,7 +106,7 @@ function ShoppingCart() {
         const userId = userContext.details ? userContext.details._id : undefined;
         const cartId = userContext.cartId ? userContext.cartId : undefined;
         const body = { quantity, breakfast, userId, cartId }
-        
+
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/addItem", {
             method: "POST",
             headers: {

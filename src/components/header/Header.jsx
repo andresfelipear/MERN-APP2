@@ -10,8 +10,9 @@ function Header() {
 
     const [userContext, setUserContext] = useContext(UserContext);
 
+
     const fetchUserDetails = useCallback(() => {
-        fetch("http://localhost:8000/api/user/me", {
+        fetch(process.env.REACT_APP_API_ENDPOINT +"me", {
             method: "GET",
             credentials: "include",
             headers: {
@@ -41,7 +42,7 @@ function Header() {
 
     //logout
     const logoutHandler = () => {
-        fetch("http://localhost:8000/api/user/logout", {
+        fetch(process.env.REACT_APP_API_ENDPOINT +"logout", {
             method: "GET",
             credentials: "include",
             headers: {
