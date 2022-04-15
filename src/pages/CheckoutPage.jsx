@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
-import { Box, Columns, Form, Heading, Icon, Section } from 'react-bulma-components'
+import React, {useState} from 'react'
+import { Box, Button, Columns, Form, Heading, Icon, Section } from 'react-bulma-components'
 import { Link } from 'react-router-dom'
 import AddressForm from '../components/addressForm/AddressForm'
+import {faPlus} from "@fortawesome/free-solid-svg-icons"
 
 function CheckoutPage() {
     const [typeDelivery, setTypeDelivery] = useState("regular")
@@ -22,20 +23,20 @@ function CheckoutPage() {
             <ol>
                 <li>
                     <div>
-                        <Heading>Choose a shipping address</Heading>
-                        <Box>
-                            <Icon size={"large"}>
+                        <Heading size={4}>Choose a shipping address</Heading>
+                        <Box display='flex' alignItems='center' shadowless style={{border:"1px solid #905960"}}>
+                            <Icon onClick={openModal} size={"medium"} style={{cursor:"pointer"}}>
                                 <FontAwesomeIcon size='lg' icon={faPlus} />
                             </Icon>
-                            <Link className='has-text-black is-italic has-text-weight-light' onClick={openModal}> Add a new address</Link>
+                            <a style={{color:"#905960", textDecoration:"underline", fontStyle:"italic"}}  onClick={openModal}>Add a new address</a>
                         </Box>
 
                     </div>
                 </li>
-                <li>
+                <li style={{marginTop:"20px"}}>
                     <div>
-                        <Heading>Items and shipping</Heading>
-                        <Box>
+                        <Heading size={4}>Items and shipping</Heading>
+                        <Box shadowless style={{border:"1px solid #905960"}}>
                             <Columns>
                                 <Columns.Column>
                                     items
@@ -52,9 +53,7 @@ function CheckoutPage() {
                                         </Form.Radio>
                                     </Form.Control>
                                 </Columns.Column>
-
                             </Columns>
-
                         </Box>
                     </div>
                 </li>

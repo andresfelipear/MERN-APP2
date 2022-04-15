@@ -10,11 +10,13 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import BreakfastsPage from './pages/BreakfastsPage';
 import DetailsBreakfastPage from './pages/detailsBreakfastPage/DetailsBreakfastPage';
+import ShoppingCart from './pages/ShoppingCart';
+import CheckoutPage from './pages/CheckoutPage';
 
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import ShoppingCart from './pages/ShoppingCart';
+
 
 
 
@@ -116,6 +118,7 @@ function App() {
         <Route path='/breakfasts' element={<BreakfastsPage />} />
         <Route path='/breakfast' element={<DetailsBreakfastPage />} />
         <Route path='/shopping-cart' element={<ShoppingCart />} />
+        <Route path="/checkout" element={<CheckoutPage/>}/>
       </Routes>
       <Foot />
     </div>

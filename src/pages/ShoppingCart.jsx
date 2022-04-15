@@ -134,8 +134,12 @@ function ShoppingCart() {
 
     const checkOut = () => {
         if (userContext.details) {
-
-
+            if(cart.products.length >=1){
+                navigate("/checkout")
+            }else{
+                openModal("Checkout Error","The shopping cart has to have at least one item to proceed")
+            }
+            
         } else {
             navigate("/login")
         }

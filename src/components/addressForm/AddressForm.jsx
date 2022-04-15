@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect, useContext } from 'react'
-import { Section, Form, Button, Box, Modal } from "react-bulma-components"
+import { Section, Form, Button, Box, Heading } from "react-bulma-components"
 
 function AddressForm({ handleClose }) {
     const [fullname, setFullname] = useState("")
@@ -24,14 +24,12 @@ function AddressForm({ handleClose }) {
         }
     }, [fullname, phoneNumber, addressF1, city, postalCode])
     return (
-        <Modal onClose={handleClose} id="modal-container">
-            <Modal.Card >
-                <Modal.Card.Header>
-                    <Modal.Card.Title>Enter your shipping address</Modal.Card.Title>
-                </Modal.Card.Header>
-                <Modal.Body>
+        <div className="modal" id="modal-container">
+            <div className="modal-background"></div>
+            <div className="modal-content">
                     <Section mt={6} >
-                        <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor: "#feecf0" }}>
+                        <Box style={{margin: 'auto', padding: "50px 50px", backgroundColor: "#feecf0" }}>
+                            <Heading>Enter your shipping address</Heading>
                             <Form.Field>
                                 <Form.Label>Full name</Form.Label>
                                 <Form.Control>
@@ -44,7 +42,6 @@ function AddressForm({ handleClose }) {
                                 <Form.Control>
                                     <Form.Input value={phoneNumber} type="number" name="phoneNumber" onChange={(e) => { setPhoneNumber(e.target.value) }} />
                                 </Form.Control>
-                                <Link className='has-text-black is-italic has-text-weight-light' to={"/forgotPassword"}> Forgot Password?</Link>
                             </Form.Field>
 
                             <Form.Field>
@@ -92,9 +89,9 @@ function AddressForm({ handleClose }) {
                             </Button.Group>
                         </Box>
                     </Section>
-                </Modal.Body>
-            </Modal.Card>
-        </Modal>
+            </div>
+            <button className="modal-close is-large" aria-label="close" onClick={handleClose}></button>
+        </div>
 
 
 
