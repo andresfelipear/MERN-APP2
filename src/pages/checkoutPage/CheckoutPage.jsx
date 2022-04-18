@@ -8,6 +8,7 @@ import "./CheckoutPage.css"
 
 function CheckoutPage() {
     const [typeDelivery, setTypeDelivery] = useState("regular")
+    const [address, setAddress] = useState()
 
     const openModal = () => {
         const modalContainer = document.getElementById("modal-container");
@@ -19,6 +20,9 @@ function CheckoutPage() {
         const modalContainer = document.getElementById("modal-container");
         modalContainer.classList.remove("is-active");
     }
+
+
+
     return (
         <Section>
             <Columns gap={4}>
@@ -26,13 +30,36 @@ function CheckoutPage() {
                     <ol>
                         <li>
                             <div>
-                                <Heading size={4}>Choose a shipping address</Heading>
-                                <Box display='flex' alignItems='center' shadowless style={{ border: "1px solid #905960" }}>
-                                    <Icon onClick={openModal} size={"medium"} style={{ cursor: "pointer" }}>
-                                        <FontAwesomeIcon size='lg' icon={faPlus} />
-                                    </Icon>
-                                    <a style={{ color: "#905960", textDecoration: "underline", fontStyle: "italic" }} onClick={openModal}>Add a new address</a>
-                                </Box>
+                                {address ? (
+                                    <>
+                                        <Heading size={4}>Shipping address</Heading>
+                                        <Box display='flex' alignItems='center' shadowless style={{ border: "1px solid #905960" }}>
+                                            <Columns style={{width:'100%'}}>
+                                                <Columns.Column>
+                                                    <ul>
+                                                        <li style={{ textTransform: 'capitalize' }}>{address.fullname}</li>
+                                                        <li style={{ textTransform: 'capitalize' }}>{address.addressF1}</li>
+                                                        <li style={{ textTransform: 'capitalize' }}>{`${address.city}, British Columbia ${address.postalCode}`}</li>
+                                                    </ul>
+                                                </Columns.Column>
+                                                <Columns.Column display='flex' justifyContent='right'>
+                                                    <a style={{ color: "#905960", textDecoration: "underline", fontStyle: "italic" }} onClick={openModal}>Change</a>
+                                                </Columns.Column>
+                                            </Columns>
+
+                                        </Box>
+                                    </>) : (
+                                    <>
+                                        <Heading size={4}>Choose a shipping address</Heading>
+                                        <Box display='flex' alignItems='center' shadowless style={{ border: "1px solid #905960" }}>
+                                            <Icon onClick={openModal} size={"medium"} style={{ cursor: "pointer" }}>
+                                                <FontAwesomeIcon size='lg' icon={faPlus} />
+                                            </Icon>
+                                            <a style={{ color: "#905960", textDecoration: "underline", fontStyle: "italic" }} onClick={openModal}>Add a new address</a>
+                                        </Box>
+                                    </>
+                                )}
+
 
                             </div>
                         </li>
@@ -94,7 +121,7 @@ function CheckoutPage() {
                 </Columns.Column>
             </Columns>
 
-            <AddressForm handleClose={closeModal} />
+            <AddressForm handleClose={closeModal} address={(data) => { console.log(data); setAddress(data) }} />
 
 
         </Section>
