@@ -4,10 +4,18 @@
     border-top: 0.2px solid #905960;
 }
 
+.shippingTable tbody{
+    border-bottom: 0.2px solid #905960;
+}
+
 .shippingTable tbody tr:nth-child(3) td, tr:nth-child(3) th{
     padding-top: 10px;
 }
 
 .shippingTable tbody tr:nth-child(2) td, tr:nth-child(2) th{
+    padding-bottom: 10px;
+}
+
+.shippingTable tbody tr:nth-child(5) td, tr:nth-child(5) th{
     padding-bottom: 10px;
 }

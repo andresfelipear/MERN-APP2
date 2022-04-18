@@ -37,7 +37,7 @@ function ShoppingCart() {
                 if (response.ok) {
                     const data = await response.json();
                     setCart(data.cart)
-                    setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
+                    setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart:data.cart  }))
                     setLoading(false);
                 }
                 else {
@@ -69,7 +69,7 @@ function ShoppingCart() {
                 if (response.ok) {
                     const data = await response.json();
                     setCart(data.cart)
-                    setUserContext(prev => ({ ...prev, cartId: data.cart._id }))
+                    setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart:data.cart  }))
                 }
                 else {
                     openModal("Error", "fetching data (breakfast)")
