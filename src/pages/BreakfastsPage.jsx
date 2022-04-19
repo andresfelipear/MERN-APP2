@@ -3,6 +3,7 @@ import { Section, Container, Notification, Heading, Columns, Card, Box, Media, C
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext';
 import Modal from '../components/notification/Modal';
+import Pager from '../components/pagination/Pager';
 
 function BreakfastsPage() {
     const [breakfasts, setBreakfasts] = useState([])
@@ -14,7 +15,16 @@ function BreakfastsPage() {
     const [notiTitle, setNotiTitle] = useState("")
     const [notiBody, setNotiBody] = useState("")
 
+    //pagination
+    const [page, setPage] = useState(0)
+    const POSTS_PER_PAGE = 12;
+
     const navigate = useNavigate()
+
+    //pagination
+    const updatePage = (page)=>{
+        setPage(page-1);
+    }
 
     const submitLike = (id) => {
         const breakfastId = id;
@@ -93,7 +103,7 @@ function BreakfastsPage() {
         <Section>
             {breakfasts.length > 0 ? (
                 <Columns m={4} multiline gap={8}>
-                    {breakfasts && breakfasts.map((breakfast) => {
+                    {breakfasts && breakfasts.slice(page*POSTS_PER_PAGE, page*POSTS_PER_PAGE+POSTS_PER_PAGE).map((breakfast) => {
                         return (
                             <Columns.Column size={"one-quarter"} key={breakfast._id}>
                                 <Card>
@@ -149,6 +159,8 @@ function BreakfastsPage() {
 
             )}
             <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal} />
+            {breakfasts && (<Pager posts={breakfasts} currentPage={page+1} perPage={POSTS_PER_PAGE} handlePage={updatePage}/>)}
+            
         </Section >
     )
 }
