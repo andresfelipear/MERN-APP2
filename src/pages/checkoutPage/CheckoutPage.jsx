@@ -48,7 +48,7 @@ function CheckoutPage() {
 
 
     return (
-        <Section>
+        <Section style={{ paddingInline: "10%" }}>
             {userContext.cart && (
                 <Columns gap={4}>
                     <Columns.Column size={"two-thirds"}>
@@ -127,6 +127,10 @@ function CheckoutPage() {
 
                     <Columns.Column>
                         <Box shadowless style={{ border: "1px solid #905960" }}>
+                            <div style={{display:"flex", justifyContent:'center'}}>
+                                <Button style={{ backgroundColor: "#905960", color: "white", margin: 'auto', width:"70%" }}>Place your Order</Button>
+                            </div>
+                            <hr style={{ backgroundColor: "#905960", height: "0.2px", margin: "15px 0 10px 0" }} />
                             <Heading size={4}>Order Summary</Heading>
                             {(shipping !== 0 && subTotal !== 0 && gst !== 0 && pst !== 0 && grandTotal !== 0) && (
                                 <>
