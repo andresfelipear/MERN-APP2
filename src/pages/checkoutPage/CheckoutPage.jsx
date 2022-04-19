@@ -6,6 +6,7 @@ import AddressForm from '../../components/addressForm/AddressForm'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import "./CheckoutPage.css"
 import { UserContext } from "../../context/UserContext"
+import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component'
 
 function CheckoutPage() {
     const [typeDelivery, setTypeDelivery] = useState("regular")
@@ -127,8 +128,14 @@ function CheckoutPage() {
 
                     <Columns.Column>
                         <Box shadowless style={{ border: "1px solid #905960" }}>
-                            <div style={{display:"flex", justifyContent:'center'}}>
-                                <Button style={{ backgroundColor: "#905960", color: "white", margin: 'auto', width:"70%" }}>Place your Order</Button>
+                            <div style={{ display: "flex", justifyContent: 'center' }}>
+                                <StripeCheckoutButton price={grandTotal} />
+                            </div>
+
+                            <div style={{textAlign: 'center',marginTop: "20px",color:"#905960", fontSize:"12px", fontStyle:'italic'}}>
+                                * Use the following test credit cart for payment *
+                                <br />
+                                4242 4242 4242 4242 - Exp: future date - CVC: 123
                             </div>
                             <hr style={{ backgroundColor: "#905960", height: "0.2px", margin: "15px 0 10px 0" }} />
                             <Heading size={4}>Order Summary</Heading>
