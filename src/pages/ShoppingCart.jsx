@@ -21,39 +21,38 @@ function ShoppingCart() {
     const navigate = useNavigate()
 
     const fetchCart = useCallback(async () => {
-        console.log(userContext)
-            setLoading(true);
-            setAttempts(5)
-            const userId = userContext.details ? userContext.details._id : undefined
-            const cartId = userContext.cartId ? userContext.cartId : undefined
-            //fetch cart
-            fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}/?cartId=${cartId}`, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then(async (response) => {
-                if (response.ok) {
-                    const data = await response.json();
-                    setCart(data.cart)
-                    setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart:data.cart  }))
-                    setLoading(false);
-                }
-                else {
-                    openModal("Error", "fetching data (breakfast)")
-                    setLoading(false);
-                }
-            }).catch(err => { console.log(err); setLoading(false) });
-        
+        setLoading(true);
+        setAttempts(5)
+        const userId = userContext.details ? userContext.details._id : undefined
+        const cartId = userContext.cartId ? userContext.cartId : undefined
+        //fetch cart
+        fetch(process.env.REACT_APP_API_ENDPOINT + `api/user/getCart/${userId}/?cartId=${cartId}`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(async (response) => {
+            if (response.ok) {
+                const data = await response.json();
+                setCart(data.cart)
+                setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart: data.cart }))
+                setLoading(false);
+            }
+            else {
+                openModal("Error", "fetching data (breakfast)")
+                setLoading(false);
+            }
+        }).catch(err => { console.log(err); setLoading(false) });
+
     }, [userContext.cartId])
 
     useEffect(() => {
-        if (userContext.cartId && cart===undefined) {
+        if (userContext.cartId && cart === undefined) {
             fetchCart()
         }
 
-    }, [ userContext.cartId])
+    }, [userContext.cartId])
 
     useEffect(() => {
         if (updQuantity) {
@@ -69,7 +68,7 @@ function ShoppingCart() {
                 if (response.ok) {
                     const data = await response.json();
                     setCart(data.cart)
-                    setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart:data.cart  }))
+                    setUserContext(prev => ({ ...prev, cartId: data.cart._id, cart: data.cart }))
                 }
                 else {
                     openModal("Error", "fetching data (breakfast)")
@@ -134,12 +133,12 @@ function ShoppingCart() {
 
     const checkOut = () => {
         if (userContext.details) {
-            if(cart.products.length >=1){
+            if (cart.products.length >= 1) {
                 navigate("/checkout")
-            }else{
-                openModal("Checkout Error","The shopping cart has to have at least one item to proceed")
+            } else {
+                openModal("Checkout Error", "The shopping cart has to have at least one item to proceed")
             }
-            
+
         } else {
             navigate("/login")
         }

@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState, useContext, useEffect } from 'react'
-import { Box, Button, Columns, Form, Heading, Icon, Section } from 'react-bulma-components'
-import { Link } from 'react-router-dom'
+import { Box, Columns, Form, Heading, Icon, Section } from 'react-bulma-components'
+import { useNavigate } from 'react-router-dom'
 import AddressForm from '../../components/addressForm/AddressForm'
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import "./CheckoutPage.css"
 import { UserContext } from "../../context/UserContext"
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component'
+import Modal from "../../components/notification/Modal"
 
 function CheckoutPage() {
     const [typeDelivery, setTypeDelivery] = useState("regular")
@@ -17,6 +18,17 @@ function CheckoutPage() {
     const [shipping, setShipping] = useState(0)
     const [grandTotal, setGrandTotal] = useState(0)
     const [subTotal, setSubTotal] = useState(0)
+    const [notiTitle, setNotiTitle] = useState("")
+    const [notiBody, setNotiBody] = useState("")
+
+    const navigate = useNavigate()
+    const openModal2 = (title, message) => {
+        setNotiTitle(title);
+        setNotiBody(message);
+        const modalContainer = document.getElementById("modal-container");
+        modalContainer.classList.add("is-active");
+
+    }
 
     const openModal = () => {
         const modalContainer = document.getElementById("modal-container");
@@ -28,6 +40,15 @@ function CheckoutPage() {
         const modalContainer = document.getElementById("modal-container");
         modalContainer.classList.remove("is-active");
     }
+
+    const closeModal2 = () => {
+        setNotiTitle("");
+        setNotiBody("");
+        const modalContainer = document.getElementById("modal-container");
+        modalContainer.classList.remove("is-active");
+        navigate("/")
+    }
+
 
     useEffect(() => {
         if (userContext.cart) {
@@ -129,10 +150,10 @@ function CheckoutPage() {
                     <Columns.Column>
                         <Box shadowless style={{ border: "1px solid #905960" }}>
                             <div style={{ display: "flex", justifyContent: 'center' }}>
-                                <StripeCheckoutButton price={grandTotal} />
+                                <StripeCheckoutButton price={grandTotal} openModal={openModal2} />
                             </div>
 
-                            <div style={{textAlign: 'center',marginTop: "20px",color:"#905960", fontSize:"12px", fontStyle:'italic'}}>
+                            <div style={{ textAlign: 'center', marginTop: "20px", color: "#905960", fontSize: "12px", fontStyle: 'italic' }}>
                                 * Use the following test credit cart for payment *
                                 <br />
                                 4242 4242 4242 4242 - Exp: future date - CVC: 123
@@ -176,8 +197,8 @@ function CheckoutPage() {
 
             )}
 
-
-            <AddressForm handleClose={closeModal} />
+            <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal2} />
+            <AddressForm handleClose={closeModal}/>
 
 
         </Section>
