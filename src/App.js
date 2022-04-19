@@ -49,7 +49,8 @@ function App() {
 
   const getCartId = useCallback(async() => {
     await setGetCart(false)
-    if (userContext.details || attempts < -8) {
+    if (userContext.details || attempts < -30) {
+      console.log(attempts)
       setAttempts(5)
       const userId = userContext.details ? userContext.details._id : undefined
       //fetch cart
