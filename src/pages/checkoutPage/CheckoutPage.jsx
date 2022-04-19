@@ -121,7 +121,7 @@ function CheckoutPage() {
                     <Columns.Column>
                         <Box shadowless style={{ border: "1px solid #905960" }}>
                             <Heading size={4}>Order Summary</Heading>
-                            {(shipping!=0 && subTotal!=0 && gst!=0 && pst!=0)&&(
+                            {(shipping!==0 && subTotal!==0 && gst!==0 && pst!==0)&&(
                             <>
                                     <table width={"100%"} className='shippingTable'>
                                         <tbody>

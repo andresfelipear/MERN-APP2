@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import { Section, Form, Button, Box, Heading } from "react-bulma-components"
+import {UserContext} from "../../context/UserContext"
 
 function AddressForm({ handleClose, address }) {
     const [fullname, setFullname] = useState("")
@@ -9,6 +10,7 @@ function AddressForm({ handleClose, address }) {
     const [addressF2, setAddressF2] = useState("")
     const [city, setCity] = useState("vancouver")
     const [postalCode, setPostalCode] = useState("")
+    const [userContext, setUserContext] = useContext(UserContext)
 
     const [disabled, setDisabled] = useState(true)
 
@@ -16,24 +18,21 @@ function AddressForm({ handleClose, address }) {
         const body = {fullname,phoneNumber,addressF1,addressF2,city,postalCode}
         address(body)
         handleClose()
-        // fetch(process.env.REACT_APP_API_ENDPOINT + "api/admin/userAddress", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(body),
-        //     credentials: "include",
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/admin/userAddress", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userContext.token}`,
+            },
+            body: JSON.stringify(body),
+            credentials: "include",
 
-        // }).then(async (response) => {
-        //     if (response.ok) {
-        //         const data = await response.json;
-        //         setAddress(data.address)
-        //         handleClose()
-        //     }
-        //     else {
-        //         openModal("Update Cart Error", "Something happened, try again!")
-        //     }
-        // })
+        }).then(async (response) => {
+            if (response.ok) {
+                const data = await response.json;
+                handleClose()
+            }
+        })
     }
 
     useEffect(() => {
