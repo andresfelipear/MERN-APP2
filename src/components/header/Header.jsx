@@ -22,6 +22,7 @@ function Header() {
         }).then(async (response) => {
             if (response.ok) {
                 const data = await response.json();
+                console.log(data)
                 setUserContext((prev) => ({ ...prev, details: data }));
             } else {
                 if (response.status === 401) {

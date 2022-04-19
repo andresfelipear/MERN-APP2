@@ -37,7 +37,14 @@ function CheckoutPage() {
             setGrandTotal(subTotal + gst + pst)
         }
 
-    }, [userContext.cart, typeDelivery, gst, pst, grandTotal, shipping])
+    }, [userContext.cart, typeDelivery, shipping, grandTotal, gst, pst, subTotal])
+
+    useEffect(() => {
+        if (userContext.details) {
+            setAddress(userContext.details.address)
+        }
+
+    }, [userContext.details])
 
 
     return (
@@ -55,8 +62,8 @@ function CheckoutPage() {
                                                 <Columns style={{ width: '100%' }}>
                                                     <Columns.Column>
                                                         <ul>
-                                                            <li style={{ textTransform: 'capitalize' }}>{address.fullname}</li>
-                                                            <li style={{ textTransform: 'capitalize' }}>{address.addressF1}</li>
+                                                            <li style={{ textTransform: 'capitalize' }}>{address.fullName}</li>
+                                                            <li style={{ textTransform: 'capitalize' }}>{address.addressField1}</li>
                                                             <li style={{ textTransform: 'capitalize' }}>{`${address.city}, British Columbia ${address.postalCode}`}</li>
                                                         </ul>
                                                     </Columns.Column>
@@ -121,8 +128,8 @@ function CheckoutPage() {
                     <Columns.Column>
                         <Box shadowless style={{ border: "1px solid #905960" }}>
                             <Heading size={4}>Order Summary</Heading>
-                            {(shipping!==0 && subTotal!==0 && gst!==0 && pst!==0)&&(
-                            <>
+                            {(shipping !== 0 && subTotal !== 0 && gst !== 0 && pst !== 0 && grandTotal !== 0) && (
+                                <>
                                     <table width={"100%"} className='shippingTable'>
                                         <tbody>
                                             <tr>
@@ -147,9 +154,9 @@ function CheckoutPage() {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <Heading mt={3} size={4} style={{color:"#905960"}}>{`Order Total:    $${grandTotal.toFixed(2)}`}</Heading>
+                                    <Heading mt={3} size={4} style={{ color: "#905960" }}>{`Order Total:    $${grandTotal.toFixed(2)}`}</Heading>
                                 </>
-                                )
+                            )
                             }
 
                         </Box>
@@ -159,7 +166,7 @@ function CheckoutPage() {
             )}
 
 
-            <AddressForm handleClose={closeModal} address={(data) => { console.log(data); setAddress(data) }} />
+            <AddressForm handleClose={closeModal} />
 
 
         </Section>

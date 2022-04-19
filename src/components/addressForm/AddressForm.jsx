@@ -16,8 +16,6 @@ function AddressForm({ handleClose, address }) {
 
     const submit = () => {
         const body = {fullname,phoneNumber,addressF1,addressF2,city,postalCode}
-        address(body)
-        handleClose()
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/admin/userAddress", {
             method: "POST",
             headers: {
