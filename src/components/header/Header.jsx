@@ -1,18 +1,32 @@
 
 import "./Header.css"
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Navbar, Box, Breadcrumb, Icon, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {faCartShopping} from "@fortawesome/free-solid-svg-icons"
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons"
 
 function Header() {
 
     const [userContext, setUserContext] = useContext(UserContext);
 
+    const mediaDesktop = '(min-width:1024px )';
+
+    const [isDesktop, setIsDesktop] = useState(false)
+
+    useEffect(() => {
+        const media = window.matchMedia(mediaDesktop)
+        if (media.matches !== isDesktop) {
+            setIsDesktop(media.matches)
+        }
+        const listener = () => setIsDesktop(media.matches);
+        window.addEventListener("resize", listener);
+        return () => window.removeEventListener("resize", listener);
+
+    }, [isDesktop])
 
     const fetchUserDetails = useCallback(() => {
-        fetch(process.env.REACT_APP_API_ENDPOINT +"api/user/me", {
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/me", {
             method: "GET",
             credentials: "include",
             headers: {
@@ -42,7 +56,7 @@ function Header() {
 
     //logout
     const logoutHandler = () => {
-        fetch(process.env.REACT_APP_API_ENDPOINT +"api/user/logout", {
+        fetch(process.env.REACT_APP_API_ENDPOINT + "api/user/logout", {
             method: "GET",
             credentials: "include",
             headers: {
@@ -107,16 +121,55 @@ function Header() {
             </Box>
 
             <Navbar p={2} color="light" backgroundColor="danger-light">
-                <Navbar.Brand >
-                    <Navbar.Item href="/">
-                        <img src="/logo.png" alt="logo" />
-                    </Navbar.Item>
-                    <Navbar.Item href="/">
-                        Home
-                    </Navbar.Item>
+                <Navbar.Brand style={{ display: 'flex', justifyContent: 'space-between' }} >
+                    <div style={{ display: 'flex' }}>
+                        <Navbar.Item href="/">
+                            <img src="/logo.png" alt="logo" />
+                        </Navbar.Item>
+                        <Navbar.Item href="/">
+                            Home
+                        </Navbar.Item>
+                    </div>
+                    {!isDesktop && (
+                        <div className="is-flex pr-4">
+                            {
+                                userContext.details ?
+                                    (
+                                        <>
+                                            <Navbar.Item>
+                                                <Icon size="large" style={{ color: "#905960" }}>
+                                                    <i className={`fas fa-lg ${userContext.details.icon}`}></i>
+                                                </Icon>
+                                                <span>{userContext.details.username}</span>
+                                            </Navbar.Item>
+                                            <Navbar.Item>
+                                                <Button onClick={logoutHandler}>
+                                                    LogOut
+                                                </Button>
+                                            </Navbar.Item>
+                                        </>
+                                    ) :
+                                    (
+                                        <>
+                                            <Navbar.Item href="/login">
+                                                Login
+                                            </Navbar.Item>
+                                            <Navbar.Item href="/signup">
+                                                SignUp
+                                            </Navbar.Item>
+                                        </>
+                                    )
+                            }
+                            <Navbar.Item href="/shopping-cart">
+                                <Icon size="large" style={{ color: "#905960" }}>
+                                    <FontAwesomeIcon size="lg" icon={faCartShopping} />
+                                </Icon>
+                            </Navbar.Item>
+                        </div>
+                    )}
 
                 </Navbar.Brand>
-                <Navbar.Menu>
+                <Navbar.Menu >
                     <Navbar.Container>
                         <Navbar.Item active={false} hoverable={true} >
                             <Navbar.Link>
@@ -164,7 +217,7 @@ function Header() {
                                     </>
                                 )
                         }
-                        <Navbar.Item href="/shopping-cart"> 
+                        <Navbar.Item href="/shopping-cart">
                             <Icon size="large" style={{ color: "#905960" }}>
                                 <FontAwesomeIcon size="lg" icon={faCartShopping} />
                             </Icon>
