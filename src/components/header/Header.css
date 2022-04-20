@@ -1,3 +1,20 @@
 .breadcrumb ul{
     align-items: center;
 }
+
+@media screen and (max-width: 1023px){
+    .navbar-menu{
+        background-color: #fff6f6!important;
+        box-shadow: none!important;
+        border-top: 1px solid #905960;
+        padding: 0px;
+    }
+    .navbar-dropdown{
+        padding: 0px;
+    }
+    .navbar-dropdown .navbar-item{
+        text-align: center;
+        border-bottom: 0.1px solid rgba(144, 89, 96,0.5);
+        font-size: medium;
+    }
+}

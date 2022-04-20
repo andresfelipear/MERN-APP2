@@ -78,7 +78,7 @@ function Header() {
     return (
         <div>
             <Box radiusless display="flex" shadowless marginless justifyContent="center" style={{ backgroundColor: "#905960" }}>
-                <Breadcrumb separator="bullet">
+                <Breadcrumb separator="bullet" className="header">
                     <Breadcrumb.Item active>
                         <a style={{ color: "white", flexDirection: "column", marginInline: "10px" }}>
                             <strong>Contact Numbers</strong>
@@ -120,7 +120,7 @@ function Header() {
                 </Breadcrumb>
             </Box>
 
-            <Navbar p={2} color="light" backgroundColor="danger-light">
+            <Navbar  color="light" backgroundColor="danger-light">
                 <Navbar.Brand style={{ display: 'flex', justifyContent: 'space-between' }} >
                     <div style={{ display: 'flex' }}>
                         <Navbar.Item href="/">
@@ -169,12 +169,68 @@ function Header() {
                     )}
 
                 </Navbar.Brand>
-                <Navbar.Menu >
+                {isDesktop ? (
+                    <Navbar.Menu className="is-active" >
+
+                        <Navbar.Container>
+                            <Navbar.Item active={false} hoverable={true} >
+                                <Navbar.Link>
+                                    More
+                                </Navbar.Link>
+                                <Navbar.Dropdown>
+                                    <Navbar.Item href="/breakfasts">
+                                        Breakfasts
+                                    </Navbar.Item>
+                                    <Navbar.Item href="/policy">
+                                        Delivery Policy
+                                    </Navbar.Item>
+                                    <Navbar.Item href="/contact">
+                                        Contact
+                                    </Navbar.Item>
+                                </Navbar.Dropdown>
+                            </Navbar.Item>
+                        </Navbar.Container>
+                        <Navbar.Container align="right">
+                            {
+                                userContext.details ?
+                                    (
+                                        <>
+                                            <Navbar.Item>
+                                                <Icon size="large" style={{ color: "#905960" }}>
+                                                    <i className={`fas fa-lg ${userContext.details.icon}`}></i>
+                                                </Icon>
+                                                <span>{userContext.details.username}</span>
+                                            </Navbar.Item>
+                                            <Navbar.Item>
+                                                <Button onClick={logoutHandler}>
+                                                    LogOut
+                                                </Button>
+                                            </Navbar.Item>
+                                        </>
+                                    ) :
+                                    (
+                                        <>
+                                            <Navbar.Item href="/login">
+                                                Login
+                                            </Navbar.Item>
+                                            <Navbar.Item href="/signup">
+                                                SignUp
+                                            </Navbar.Item>
+                                        </>
+                                    )
+                            }
+                            <Navbar.Item href="/shopping-cart">
+                                <Icon size="large" style={{ color: "#905960" }}>
+                                    <FontAwesomeIcon size="lg" icon={faCartShopping} />
+                                </Icon>
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+                ) : (
+                    <Navbar.Menu className="is-active" >
+
                     <Navbar.Container>
                         <Navbar.Item active={false} hoverable={true} >
-                            <Navbar.Link>
-                                More
-                            </Navbar.Link>
                             <Navbar.Dropdown>
                                 <Navbar.Item href="/breakfasts">
                                     Breakfasts
@@ -188,42 +244,9 @@ function Header() {
                             </Navbar.Dropdown>
                         </Navbar.Item>
                     </Navbar.Container>
-                    <Navbar.Container align="right">
-                        {
-                            userContext.details ?
-                                (
-                                    <>
-                                        <Navbar.Item>
-                                            <Icon size="large" style={{ color: "#905960" }}>
-                                                <i className={`fas fa-lg ${userContext.details.icon}`}></i>
-                                            </Icon>
-                                            <span>{userContext.details.username}</span>
-                                        </Navbar.Item>
-                                        <Navbar.Item>
-                                            <Button onClick={logoutHandler}>
-                                                LogOut
-                                            </Button>
-                                        </Navbar.Item>
-                                    </>
-                                ) :
-                                (
-                                    <>
-                                        <Navbar.Item href="/login">
-                                            Login
-                                        </Navbar.Item>
-                                        <Navbar.Item href="/signup">
-                                            SignUp
-                                        </Navbar.Item>
-                                    </>
-                                )
-                        }
-                        <Navbar.Item href="/shopping-cart">
-                            <Icon size="large" style={{ color: "#905960" }}>
-                                <FontAwesomeIcon size="lg" icon={faCartShopping} />
-                            </Icon>
-                        </Navbar.Item>
-                    </Navbar.Container>
                 </Navbar.Menu>
+                )}
+
             </Navbar>
 
         </div>
