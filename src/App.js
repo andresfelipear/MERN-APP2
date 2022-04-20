@@ -16,6 +16,7 @@ import CheckoutPage from './pages/checkoutPage/CheckoutPage';
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage';
 
 
 
@@ -120,6 +121,7 @@ function App() {
         <Route path='/breakfast' element={<DetailsBreakfastPage />} />
         <Route path='/shopping-cart' element={<ShoppingCart />} />
         <Route path="/checkout" element={<CheckoutPage/>}/>
+        <Route path='/' element={<HomePage/>} />
       </Routes>
       <Foot />
     </div>
