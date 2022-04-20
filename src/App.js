@@ -16,7 +16,7 @@ import CheckoutPage from './pages/checkoutPage/CheckoutPage';
 import { UserContext } from './context/UserContext'
 import { useContext, useEffect, useCallback, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import HomePage from './pages/HomePage';
+import HomePage from './pages/homePage/HomePage';
 
 
 

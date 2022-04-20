@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import { Section, Container, Notification, Heading, Columns, Card, Box, Media, Content, Icon } from "react-bulma-components"
 import { Link, useNavigate } from 'react-router-dom'
-import { UserContext } from '../context/UserContext';
-import Modal from '../components/notification/Modal';
-import banner from "../assets/images/banner.jpg"
+import { UserContext } from '../../context/UserContext';
+import Modal from '../../components/notification/Modal';
+import banner from "../../assets/images/banner.jpg"
 import {Image} from "react-bulma-components"
+import "./HomePage.css"
 
 function HomePage() {
     const [breakfasts, setBreakfasts] = useState([])
