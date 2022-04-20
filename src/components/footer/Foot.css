@@ -1,0 +1,14 @@
+@media screen and  (max-width:1024px) {
+    footer nav ul{
+        flex-direction: column;
+    }
+
+    footer nav ul li{
+        margin: 10px 0;
+    }
+
+    footer nav ul li:nth-child(3) a{
+        margin: 0 40px!important;
+    }
+  
+  }
