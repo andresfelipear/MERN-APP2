@@ -111,12 +111,12 @@ function BreakfastsPage() {
                                     <Card.Content flexDirection='column' display='flex' alignItems='center' justifyContent='center' style={{ paddingTop: "10px", minHeight: "226px" }}>
                                         <Box alignItems='center' shadowless display='flex' style={{ padding: "0px", margin: "0px" }}>
                                             {userContext.details ? (
-                                                <Icon size='medium' onClick={() => { submitLike(breakfast._id) }} >
+                                                <Icon style={{cursor:'pointer'}} size='medium' onClick={() => { submitLike(breakfast._id) }} >
                                                     <i className="far fa-lg fa-thumbs-up p-8"></i>
                                                 </Icon>
 
                                             ) : (
-                                                <Icon size='medium' onClick={() => { openModal("No Authenticated User", "Error you should be logged for like a breakfast") }} >
+                                                <Icon style={{cursor:'pointer'}} size='medium' onClick={() => { openModal("No Authenticated User", "Error you should be logged for like a breakfast") }} >
                                                     <i className="far fa-lg fa-thumbs-up p-8"></i>
                                                 </Icon>
 
