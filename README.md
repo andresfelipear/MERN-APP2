@@ -21,8 +21,8 @@ Clone the repository.
 Use command "npm install"
 
 ## Run Project
-Use command "npm run dev"
-Note: no forget create a .env file and include the enviroments variables listed bellow:
-REACT_APP_API_FORMAT_IMAGES= png >> "extension images, default png. If you want to change the extension, is neccesary convert the images to another format"
-REACT_APP_API_ENDPOINT= "http://localhost:8000" >> "port where you have running the back end api"
-REACT_APP_STRIPE_KEY=xxxxxx >> "your stripe key used for payment process. If you don't have and account go here https://stripe.com/en-ca and create one."
+Use command "npm run dev"  
+Note: no forget create a .env file and include the enviroments variables listed bellow:  
+REACT_APP_API_FORMAT_IMAGES= png >> "extension images, default png. If you want to change the extension, is neccesary convert the images to another format"  
+REACT_APP_API_ENDPOINT= "http://localhost:8000" >> "port where you have running the back end api"  
+REACT_APP_STRIPE_KEY=xxxxxx >> "your stripe key used for payment process. If you don't have and account go here https://stripe.com/en-ca and create one."  
