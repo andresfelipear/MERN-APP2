@@ -12,3 +12,12 @@
     }
   
   }
+
+  footer strong{
+      color: white !important;
+  }
+
+  footer .breadcrumb a{
+      color: white!important;
+      cursor: pointer!important;
+  }
