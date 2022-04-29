@@ -38,4 +38,8 @@
     .columns.is-variable.is-8 {
         --columnGap: 0!important;
     }
+
+    .columns .column .card-content article div h1{
+        font-size: 1.4rem!important;
+    }
 }
