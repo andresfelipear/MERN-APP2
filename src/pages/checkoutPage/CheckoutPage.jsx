@@ -81,8 +81,9 @@ function CheckoutPage() {
                         <ol>
                             <li>
                                 <div>
-                                    {address!==null ? (
+                                    {(address!==undefined && address!==null) ? (
                                         <>
+                                        {console.log(address)}
                                             <Heading size={4}>Shipping address</Heading>
                                             <Box display='flex' alignItems='center' shadowless style={{ border: "1px solid #905960" }}>
                                                 <Columns style={{ width: '100%' }}>

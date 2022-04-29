@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { Navbar, Box, Breadcrumb, Icon, Button } from "react-bulma-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
 
@@ -13,6 +14,8 @@ function Header() {
     const mediaDesktop = '(min-width:1024px )';
 
     const [isDesktop, setIsDesktop] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const media = window.matchMedia(mediaDesktop)
@@ -70,6 +73,7 @@ function Header() {
             else {
                 const data = await response.json()
                 setUserContext(prev => ({ ...prev, details: undefined, token: null, cartId: null }))
+                navigate('/')
             }
 
         });

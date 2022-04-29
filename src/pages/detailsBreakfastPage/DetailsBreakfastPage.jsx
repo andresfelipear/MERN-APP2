@@ -110,7 +110,7 @@ function DetailsBreakfastPage() {
                                 {breakfast.Items.map((item) => {
                                     const stringObject = Object.values(item).map((val) => { return val }).join("");
                                     return (
-                                        <li style={{ display: "flex", alignItems: "center" }}>
+                                        <li key={stringObject} style={{ display: "flex", alignItems: "center" }}>
                                             <Icon mr={2} size="small" style={{ color: "#905960" }}>
                                                 <FontAwesomeIcon size='sm' icon={faStar} />
                                             </Icon>
@@ -119,8 +119,8 @@ function DetailsBreakfastPage() {
                                     )
                                 })}
                             </ul>
-                            <Heading my={4} subtitle>This price don't include the cost of delivery</Heading>
-                            <Heading size={3} subtitle weight='semibold' style={{ fontStyle: "italic" }}>${breakfast.Price.toFixed(2)}</Heading>
+                            <Heading size={4} my={4} subtitle>This price don't include the cost of delivery</Heading>
+                            <Heading size={3} mt={4} subtitle weight='semibold' style={{ fontStyle: "italic" }}>${breakfast.Price.toFixed(2)}</Heading>
                             <Form.Field display='flex' alignItems='center'>
                                 <Form.Label mr={2}>Quantity</Form.Label>
                                 <Form.Select size={'small'} value={quantity} onChange={(e) => { setQuantity(e.target.value) }}>
