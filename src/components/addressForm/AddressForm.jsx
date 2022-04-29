@@ -43,20 +43,21 @@ function AddressForm({ handleClose, address }) {
 
     useEffect(() => {
         if (userContext.details) {
-            setFullname(userContext.details.address.fullName)
-            setAddressF1(userContext.details.address.addressField1)
-            setAddressF2(userContext.details.address.addressField2)
-            setCity(userContext.details.address.city)
-            setPhoneNumber(userContext.details.address.phoneNumber)
-            setPostalCode(userContext.details.address.postalCode)
-
+            if(userContext.details.address){
+                setFullname(userContext.details.address.fullName)
+                setAddressF1(userContext.details.address.addressField1)
+                setAddressF2(userContext.details.address.addressField2)
+                setCity(userContext.details.address.city)
+                setPhoneNumber(userContext.details.address.phoneNumber)
+                setPostalCode(userContext.details.address.postalCode)
+            }
         }
 
 
     }, [userContext.details])
 
     return (
-        <div className="modal" id="modal-container">
+        <div className="modal" id="modal-container2">
             <div className="modal-background"></div>
             <div className="modal-content">
                 <Section mt={6} >

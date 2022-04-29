@@ -31,13 +31,13 @@ function CheckoutPage() {
     }
 
     const openModal = () => {
-        const modalContainer = document.getElementById("modal-container");
+        const modalContainer = document.getElementById("modal-container2");
         modalContainer.classList.add("is-active");
 
     }
 
     const closeModal = () => {
-        const modalContainer = document.getElementById("modal-container");
+        const modalContainer = document.getElementById("modal-container2");
         modalContainer.classList.remove("is-active");
     }
 
@@ -63,6 +63,7 @@ function CheckoutPage() {
 
     useEffect(() => {
         if (userContext.details) {
+            console.log(userContext.details)
             setAddress(userContext.details.address)
         }
 
@@ -77,7 +78,7 @@ function CheckoutPage() {
                         <ol>
                             <li>
                                 <div>
-                                    {address ? (
+                                    {address!==null ? (
                                         <>
                                             <Heading size={4}>Shipping address</Heading>
                                             <Box display='flex' alignItems='center' shadowless style={{ border: "1px solid #905960" }}>
