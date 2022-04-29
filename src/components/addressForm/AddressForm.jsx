@@ -4,18 +4,18 @@ import { Section, Form, Button, Box, Heading } from "react-bulma-components"
 import { UserContext } from "../../context/UserContext"
 
 function AddressForm({ handleClose, address }) {
-    const [fullname, setFullname] = useState("")
+    const [fullName, setFullname] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    const [addressF1, setAddressF1] = useState("")
-    const [addressF2, setAddressF2] = useState("")
-    const [city, setCity] = useState("vancouver")
+    const [addressField1, setAddressField1] = useState("")
+    const [addressField2, setAddressField2] = useState("")
+    const [city, setCity] = useState("Vancouver")
     const [postalCode, setPostalCode] = useState("")
     const [userContext, setUserContext] = useContext(UserContext)
 
     const [disabled, setDisabled] = useState(true)
 
     const submit = () => {
-        const body = { fullname, phoneNumber, addressF1, addressF2, city, postalCode }
+        const body = {fullName, phoneNumber, addressField1,addressField2, city, postalCode }
         fetch(process.env.REACT_APP_API_ENDPOINT + "api/admin/userAddress", {
             method: "POST",
             headers: {
@@ -28,25 +28,26 @@ function AddressForm({ handleClose, address }) {
         }).then(async (response) => {
             if (response.ok) {
                 const data = await response.json;
+                address(body)
                 handleClose()
             }
         })
     }
 
     useEffect(() => {
-        if (fullname && phoneNumber && addressF1 && city && postalCode) {
+        if (fullName && phoneNumber && addressField1 && city && postalCode) {
             setDisabled(false)
         } else {
             setDisabled(true)
         }
-    }, [fullname, phoneNumber, addressF1, city, postalCode])
+    }, [fullName, phoneNumber, addressField1, city, postalCode])
 
     useEffect(() => {
         if (userContext.details) {
             if(userContext.details.address){
                 setFullname(userContext.details.address.fullName)
-                setAddressF1(userContext.details.address.addressField1)
-                setAddressF2(userContext.details.address.addressField2)
+                setAddressField1(userContext.details.address.addressField1)
+                setAddressField2(userContext.details.address.addressField2)
                 setCity(userContext.details.address.city)
                 setPhoneNumber(userContext.details.address.phoneNumber)
                 setPostalCode(userContext.details.address.postalCode)
@@ -66,7 +67,7 @@ function AddressForm({ handleClose, address }) {
                         <Form.Field>
                             <Form.Label>Full name</Form.Label>
                             <Form.Control>
-                                <Form.Input value={fullname} type="text" name="fullname" onChange={(e) => { setFullname(e.target.value) }} />
+                                <Form.Input value={fullName} type="text" name="fullname" onChange={(e) => { setFullname(e.target.value) }} />
                             </Form.Control>
                         </Form.Field>
 
@@ -80,8 +81,8 @@ function AddressForm({ handleClose, address }) {
                         <Form.Field>
                             <Form.Label>Address</Form.Label>
                             <Form.Control>
-                                <Form.Input value={addressF1} type="text" name="addressF1" onChange={(e) => { setAddressF1(e.target.value) }} />
-                                <Form.Input value={addressF2} type="text" name="addressF2" onChange={(e) => { setAddressF2(e.target.value) }} />
+                                <Form.Input value={addressField1} type="text" name="addressField1" onChange={(e) => { setAddressField1(e.target.value) }} />
+                                <Form.Input value={addressField2} type="text" name="addressField2" onChange={(e) => { setAddressField2(e.target.value) }} />
                             </Form.Control>
                         </Form.Field>
 

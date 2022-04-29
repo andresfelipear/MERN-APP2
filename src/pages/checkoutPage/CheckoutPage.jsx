@@ -22,6 +22,10 @@ function CheckoutPage() {
     const [notiBody, setNotiBody] = useState("")
 
     const navigate = useNavigate()
+
+    const updateAddress =(address2)=>{
+        setAddress(address2);
+    }
     const openModal2 = (title, message) => {
         setNotiTitle(title);
         setNotiBody(message);
@@ -199,7 +203,7 @@ function CheckoutPage() {
             )}
 
             <Modal notiTitle={notiTitle} notiBody={notiBody} handleClose={closeModal2} />
-            <AddressForm handleClose={closeModal}/>
+            <AddressForm address={updateAddress} handleClose={closeModal}/>
 
 
         </Section>
