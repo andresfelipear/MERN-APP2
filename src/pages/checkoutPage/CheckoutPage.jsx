@@ -67,7 +67,6 @@ function CheckoutPage() {
 
     useEffect(() => {
         if (userContext.details) {
-            console.log(userContext.details)
             setAddress(userContext.details.address)
         }
 
