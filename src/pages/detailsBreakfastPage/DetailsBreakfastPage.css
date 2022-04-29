@@ -1,3 +1,29 @@
-figure img{
-    max-height: 600px !important;
+@media screen and (max-width:768px) {
+    .detailsBreakfasts .box h1{
+        font-size: 0.8rem!important;
+    }
+
+    .detailsBreakfasts .box .subtitle, .detailsBreakfasts .box label{
+        font-size: 0.7rem!important;
+    }
+
+    .detailsBreakfasts .box ul{
+        font-size: 0.6rem!important;
+        margin-left: 0!important;
+    }
+
+    .detailsBreakfasts .box button, .detailsBreakfasts .box .select{
+        font-size: 0.4rem!important;
+    }
+
+    .detailsBreakfasts .box .content{
+        min-width: 57%!important;
+    }
+
+    .detailsBreakfasts .box .content div .subtitle:nth-child(3){
+        font-size: 0.6rem!important;
+    }
+
+
+
 }

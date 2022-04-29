@@ -98,11 +98,11 @@ function DetailsBreakfastPage() {
     }
 
     return (
-        <Section>
+        <Section className='detailsBreakfasts'>
             {breakfast && (
                 <Box display='flex' style={{ alignItems: "center", justifyContent: "space-evenly" }}>
                     <Image src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} style={{maxHeight:"600px!important"}}/>
-                    <div style={{ paddingLeft: "20px" }}>
+                    <div className='content' style={{ paddingLeft: "20px" }}>
                         <Heading textTransform='uppercase'>{breakfast.Name}</Heading>
                         <div>
                             <Heading subtitle>Details: </Heading>

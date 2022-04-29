@@ -1,23 +1,50 @@
-@media screen and  (max-width:1024px) {
-    footer nav ul{
+@media screen and (max-width:1024px) {
+    footer nav ul {
         flex-direction: column;
     }
 
-    footer nav ul li{
+    footer nav ul li {
         margin: 5px 0;
     }
 
-    footer nav ul li:nth-child(3) a{
-        margin: 0 40px!important;
+    footer nav ul li:nth-child(3) a {
+        margin: 0 10px !important;
     }
-  
-  }
 
-  footer strong{
-      color: white !important;
-  }
+    footer nav ul li:nth-child(3) div:first-child {
+        margin-right: 40px!important;
+    }
+    footer .breadcrumb.has-arrow-separator li+li::before{
+        content: none;
+    }
 
-  footer .breadcrumb a{
-      color: white!important;
-      cursor: pointer!important;
-  }
+}
+
+footer strong {
+    color: white !important;
+}
+
+footer .breadcrumb a {
+    color: white !important;
+    cursor: pointer !important;
+}
+
+@media screen and (max-width:768px) {
+    footer nav ul li:nth-child(3) a {
+        margin: 0px 0px !important;
+    }
+
+    footer nav ul li:nth-child(3) div{
+        margin: 0px!important;
+    }
+
+    footer nav ul li:nth-child(3) div:first-child {
+        margin-right: 0px!important;
+    }
+
+    footer nav ul li:nth-child(3) div:last-child a span {
+        margin: 0px!important;
+    }
+
+
+}

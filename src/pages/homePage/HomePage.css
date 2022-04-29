@@ -34,4 +34,8 @@
     .header ul li {
         margin: 5px 0;
     }
+
+    .columns.is-variable.is-8 {
+        --columnGap: 0!important;
+    }
 }
