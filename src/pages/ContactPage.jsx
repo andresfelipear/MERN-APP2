@@ -69,7 +69,7 @@ function ContactPage() {
     }, [message, name, email])
     return (
         <Section mt={6} >
-            <Box style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor: "#feecf0" }}>
+            <Box className='contactForm' style={{ width: 410, margin: 'auto', padding: "70px 50px", backgroundColor: "#feecf0" }}>
                     <Heading textAlign="center">Who are you?</Heading>
                     <Form.Field>
                         <Form.Label>Name</Form.Label>

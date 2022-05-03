@@ -155,7 +155,7 @@ function ShoppingCart() {
         <>
             {cart && (
                 <>
-                    <Table mt={4} ml="auto" mr="auto" size='fullwidth' style={{ maxWidth: '1000px' }} >
+                    <Table className='tableCart' mt={4} ml="auto" mr="auto" size='fullwidth' style={{ maxWidth: '1000px' }} >
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -171,7 +171,7 @@ function ShoppingCart() {
                                 return (
                                     <tr key={product._id}>
                                         <td style={{ verticalAlign: "middle" }} >
-                                            <Image className='tableCart' src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} />
+                                            <Image className='tableCartImg' src={`/images/breakfasts/${breakfast.Img}.${process.env.REACT_APP_API_FORMAT_IMAGES}`} />
                                         </td>
                                         <td style={{ verticalAlign: "middle" }} >{breakfast.Name}</td>
                                         <td style={{ verticalAlign: "middle" }} >
