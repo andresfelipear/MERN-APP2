@@ -3,7 +3,7 @@ import { Section, Container, Notification, Heading, Columns, Card, Box, Media, C
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext';
 import Modal from '../../components/notification/Modal';
-import banner from "../../assets/images/banner.jpg"
+import banner from "../../assets/images/banner.png"
 import {Image} from "react-bulma-components"
 import "./HomePage.css"
 
